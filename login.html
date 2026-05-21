@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>EduSpace — Login / Sign Up</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--gold:#c9a84c;--gold-light:#e8c97a;--navy:#0f1623;--navy2:#1a2340;--navy3:#253056;--surface:#192035;--border:rgba(201,168,76,0.2);--text:#e8e4dc;--text2:#9aa3b8;--red:#e05c5c;--green:#4caf84}
+body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);min-height:100vh;display:flex;flex-direction:column}
+
+/* BG */
+.bg{position:fixed;inset:0;z-index:0;background:linear-gradient(135deg,#0f1623 0%,#1a2340 60%,#1a2f50 100%)}
+.bg::before{content:'';position:absolute;top:-100px;right:-100px;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(201,168,76,.08) 0%,transparent 70%)}
+.bg::after{content:'';position:absolute;bottom:-80px;left:-80px;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(201,168,76,.05) 0%,transparent 70%)}
+
+/* LAYOUT */
+.wrap{position:relative;z-index:1;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem 1rem}
+.brand{text-align:center;margin-bottom:2rem}
+.brand h1{font-family:'Playfair Display',serif;font-size:2rem;color:var(--gold);letter-spacing:.02em}
+.brand p{font-size:.85rem;color:var(--text2);margin-top:.3rem}
+
+/* CARD */
+.card{background:rgba(25,32,53,.95);border:1px solid var(--border);border-radius:10px;width:100%;max-width:420px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.4)}
+
+/* TABS */
+.tabs{display:grid;grid-template-columns:1fr 1fr}
+.tab{padding:1rem;text-align:center;font-weight:600;font-size:.9rem;cursor:pointer;color:var(--text2);background:rgba(255,255,255,.03);border-bottom:2px solid transparent;transition:all .2s}
+.tab.on{color:var(--gold);background:transparent;border-bottom-color:var(--gold)}
+
+/* FORMS */
+.forms{padding:1.8rem}
+.form{display:none;flex-direction:column;gap:1rem}
+.form.on{display:flex}
+
+.field{display:flex;flex-direction:column;gap:.35rem}
+.field label{font-size:.76rem;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.07em}
+.field input{background:#202b4a;border:1px solid var(--border);border-radius:5px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.92rem;padding:11px 13px;outline:none;transition:border-color .2s;width:100%}
+.field input:focus{border-color:var(--gold)}
+.field input::placeholder{color:rgba(255,255,255,.25)}
+
+.btn{width:100%;padding:12px;background:var(--gold);color:var(--navy2);border:none;border-radius:5px;font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:700;cursor:pointer;transition:background .2s,transform .15s;margin-top:.3rem}
+.btn:hover{background:var(--gold-light);transform:translateY(-1px)}
+.btn:active{transform:translateY(0)}
+
+.divider{display:flex;align-items:center;gap:.75rem;color:var(--text2);font-size:.78rem}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border)}
+
+.msg{font-size:.82rem;padding:10px 13px;border-radius:5px;display:none}
+.msg.err{background:rgba(224,92,92,.12);border:1px solid rgba(224,92,92,.3);color:#f09090;display:block}
+.msg.ok{background:rgba(76,175,132,.12);border:1px solid rgba(76,175,132,.3);color:#7ed9b0;display:block}
+
+.hint{font-size:.78rem;color:var(--text2);text-align:center}
+.hint a{color:var(--gold);cursor:pointer;text-decoration:none}
+.hint a:hover{text-decoration:underline}
+
+/* password strength */
+.strength{height:3px;border-radius:2px;margin-top:4px;background:var(--border);overflow:hidden}
+.strength-bar{height:100%;width:0;border-radius:2px;transition:width .3s,background .3s}
+
+/* FOOTER */
+footer{position:relative;z-index:1;text-align:center;padding:1.2rem;font-size:.78rem;color:rgba(255,255,255,.25)}
+footer span{color:var(--gold)}
+</style>
+</head>
+<body>
+<div class="bg"></div>
+<div class="wrap">
+  <div class="brand">
+    <h1>EduSpace</h1>
+    <p>Your Teaching & Learning Portal</p>
+  </div>
+
+  <div class="card">
+    <div class="tabs">
+      <div class="tab on" onclick="switchTab('login')">Log In</div>
+      <div class="tab"    onclick="switchTab('signup')">Sign Up</div>
+    </div>
+    <div class="forms">
+
+      <!-- LOGIN -->
+      <form class="form on" id="f-login" onsubmit="doLogin(event)">
+        <div id="login-msg" class="msg"></div>
+        <div class="field">
+          <label>Email</label>
+          <input id="l-email" type="email" placeholder="you@example.com" required/>
+        </div>
+        <div class="field">
+          <label>Password</label>
+          <input id="l-pass" type="password" placeholder="Your password" required/>
+        </div>
+        <button class="btn" type="submit">Log In</button>
+        <p class="hint">Don't have an account? <a onclick="switchTab('signup')">Sign up here</a></p>
+      </form>
+
+      <!-- SIGNUP -->
+      <form class="form" id="f-signup" onsubmit="doSignup(event)">
+        <div id="signup-msg" class="msg"></div>
+        <div class="field">
+          <label>Full Name</label>
+          <input id="s-name" type="text" placeholder="e.g. Tenzin Dorji" required/>
+        </div>
+        <div class="field">
+          <label>Email</label>
+          <input id="s-email" type="email" placeholder="you@example.com" required/>
+        </div>
+        <div class="field">
+          <label>Password</label>
+          <input id="s-pass" type="password" placeholder="Min. 6 characters" required oninput="checkStrength(this.value)"/>
+          <div class="strength"><div class="strength-bar" id="sbar"></div></div>
+        </div>
+        <div class="field">
+          <label>Confirm Password</label>
+          <input id="s-pass2" type="password" placeholder="Repeat password" required/>
+        </div>
+        <button class="btn" type="submit">Create Account</button>
+        <p class="hint">Already have an account? <a onclick="switchTab('login')">Log in here</a></p>
+      </form>
+
+    </div>
+  </div>
+</div>
+<footer>© 2025 <span>EduSpace</span></footer>
+
+<script>
+// ── HELPERS ──
+function DB_get(k){ try{ return JSON.parse(localStorage.getItem(k)||'null') }catch{ return null } }
+function DB_set(k,v){ localStorage.setItem(k,JSON.stringify(v)) }
+function showMsg(id,msg,type){ const el=document.getElementById(id); el.textContent=msg; el.className='msg '+type }
+
+// ── TAB SWITCH ──
+function switchTab(t){
+  document.querySelectorAll('.tab').forEach((el,i)=>el.classList.toggle('on',(t==='login'&&i===0)||(t==='signup'&&i===1)));
+  document.getElementById('f-login').classList.toggle('on', t==='login');
+  document.getElementById('f-signup').classList.toggle('on', t==='signup');
+}
+
+// ── PASSWORD STRENGTH ──
+function checkStrength(v){
+  const bar = document.getElementById('sbar');
+  let score = 0;
+  if(v.length>=6) score++;
+  if(v.length>=10) score++;
+  if(/[A-Z]/.test(v)) score++;
+  if(/[0-9]/.test(v)) score++;
+  if(/[^A-Za-z0-9]/.test(v)) score++;
+  const pct = [0,20,40,65,85,100][score];
+  const col = ['#e05c5c','#e05c5c','#e8a84c','#c9a84c','#4caf84','#4caf84'][score];
+  bar.style.width=pct+'%'; bar.style.background=col;
+}
+
+// ── SIGNUP ──
+function doSignup(e){
+  e.preventDefault();
+  const name  = document.getElementById('s-name').value.trim();
+  const email = document.getElementById('s-email').value.trim().toLowerCase();
+  const pass  = document.getElementById('s-pass').value;
+  const pass2 = document.getElementById('s-pass2').value;
+
+  if(pass.length<6){ showMsg('signup-msg','Password must be at least 6 characters.','err'); return; }
+  if(pass!==pass2){ showMsg('signup-msg','Passwords do not match.','err'); return; }
+
+  const users = DB_get('edu_users')||[];
+  if(users.find(u=>u.email===email)){ showMsg('signup-msg','An account with this email already exists.','err'); return; }
+
+  // simple hash (not cryptographic — for local/demo use)
+  const hashed = btoa(pass+'__edu__'+email);
+  const user = { id: Date.now().toString(36), name, email, hashed, role:'user', joined: new Date().toISOString(), downloads:[], comments:[] };
+  users.push(user);
+  DB_set('edu_users', users);
+
+  showMsg('signup-msg','Account created! Logging you in…','ok');
+  setTimeout(()=>{ loginUser(user); }, 900);
+}
+
+// ── LOGIN ──
+function doLogin(e){
+  e.preventDefault();
+  const email = document.getElementById('l-email').value.trim().toLowerCase();
+  const pass  = document.getElementById('l-pass').value;
+  const hashed = btoa(pass+'__edu__'+email);
+
+  const users = DB_get('edu_users')||[];
+  const user = users.find(u=>u.email===email && u.hashed===hashed);
+  if(!user){ showMsg('login-msg','Incorrect email or password.','err'); return; }
+
+  loginUser(user);
+}
+
+function loginUser(user){
+  DB_set('edu_session',{ id:user.id, name:user.name, email:user.email, role:user.role });
+  window.location.href = 'index.html';
+}
+
+// ── AUTO-REDIRECT if already logged in ──
+const session = DB_get('edu_session');
+if(session) window.location.href='index.html';
+</script>
+</body>
+</html>
