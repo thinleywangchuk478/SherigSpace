@@ -7,7 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--gold:#c9a84c;--gold-light:#e8c97a;--navy:#0f1623;--navy2:#1a2340;--navy3:#253056;--surface:#192035;--border:rgba(201,168,76,0.2);--text:#e8e4dc;--text2:#9aa3b8;--red:#e05c5c;--green:#4caf84}
+:root{--gold:#c9a84c;--gold-light:#e8c97a;--navy:#0779a3;--navy2:#1a2340;--navy3:#0a4567;--surface:#192035;--border:rgba(201,168,76,0.2);--text:#e8e4dc;--text2:#9aa3b8;--red:#e05c5c;--green:#4caf84}
 body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);min-height:100vh;display:flex;flex-direction:column}
 
 /* BG */
@@ -59,6 +59,59 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);m
 .strength{height:3px;border-radius:2px;margin-top:4px;background:var(--border);overflow:hidden}
 .strength-bar{height:100%;width:0;border-radius:2px;transition:width .3s,background .3s}
 
+/* MODAL */
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.65);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:1000;
+  padding:1rem;
+}
+
+.modal.show{
+  display:flex;
+}
+
+.modal-box{
+  width:100%;
+  max-width:400px;
+  background:rgba(25,32,53,.98);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:1.5rem;
+  box-shadow:0 20px 60px rgba(0,0,0,.5);
+}
+
+.modal-box h2{
+  color:var(--gold);
+  margin-bottom:.5rem;
+  font-size:1.3rem;
+}
+
+.modal-text{
+  color:var(--text2);
+  font-size:.85rem;
+  margin-bottom:1rem;
+}
+
+.modal-actions{
+  display:flex;
+  gap:.7rem;
+  margin-top:1rem;
+}
+
+.cancel-btn{
+  background:#39415f;
+  color:var(--text);
+}
+
+.cancel-btn:hover{
+  background:#4a5375;
+}
+
 /* FOOTER */
 footer{position:relative;z-index:1;text-align:center;padding:1.2rem;font-size:.78rem;color:rgba(255,255,255,.25)}
 footer span{color:var(--gold)}
@@ -66,6 +119,7 @@ footer span{color:var(--gold)}
 </head>
 <body>
 <div class="bg"></div>
+
 <div class="wrap">
   <div class="brand">
     <h1>EduSpace</h1>
@@ -75,63 +129,136 @@ footer span{color:var(--gold)}
   <div class="card">
     <div class="tabs">
       <div class="tab on" onclick="switchTab('login')">Log In</div>
-      <div class="tab"    onclick="switchTab('signup')">Sign Up</div>
+      <div class="tab" onclick="switchTab('signup')">Sign Up</div>
     </div>
+
     <div class="forms">
 
       <!-- LOGIN -->
       <form class="form on" id="f-login" onsubmit="doLogin(event)">
         <div id="login-msg" class="msg"></div>
+
         <div class="field">
           <label>Email</label>
           <input id="l-email" type="email" placeholder="you@example.com" required/>
         </div>
+
         <div class="field">
           <label>Password</label>
           <input id="l-pass" type="password" placeholder="Your password" required/>
         </div>
+
+        <p class="hint" style="text-align:right;margin-top:-8px;">
+          <a onclick="openForgotPassword()">Forgot Password?</a>
+        </p>
+
         <button class="btn" type="submit">Log In</button>
-        <p class="hint">Don't have an account? <a onclick="switchTab('signup')">Sign up here</a></p>
+
+        <p class="hint">
+          Don't have an account?
+          <a onclick="switchTab('signup')">Sign up here</a>
+        </p>
       </form>
 
       <!-- SIGNUP -->
       <form class="form" id="f-signup" onsubmit="doSignup(event)">
         <div id="signup-msg" class="msg"></div>
+
         <div class="field">
           <label>Full Name</label>
           <input id="s-name" type="text" placeholder="e.g. Tenzin Dorji" required/>
         </div>
+
         <div class="field">
           <label>Email</label>
           <input id="s-email" type="email" placeholder="you@example.com" required/>
         </div>
+
         <div class="field">
           <label>Password</label>
           <input id="s-pass" type="password" placeholder="Min. 6 characters" required oninput="checkStrength(this.value)"/>
-          <div class="strength"><div class="strength-bar" id="sbar"></div></div>
+          <div class="strength">
+            <div class="strength-bar" id="sbar"></div>
+          </div>
         </div>
+
         <div class="field">
           <label>Confirm Password</label>
           <input id="s-pass2" type="password" placeholder="Repeat password" required/>
         </div>
+
         <button class="btn" type="submit">Create Account</button>
-        <p class="hint">Already have an account? <a onclick="switchTab('login')">Log in here</a></p>
+
+        <p class="hint">
+          Already have an account?
+          <a onclick="switchTab('login')">Log in here</a>
+        </p>
       </form>
 
     </div>
   </div>
 </div>
-<footer>© 2025 <span>EduSpace</span></footer>
+
+<!-- FORGOT PASSWORD MODAL -->
+<div id="forgotModal" class="modal">
+  <div class="modal-box">
+
+    <h2>Reset Password</h2>
+    <p class="modal-text">Enter your registered email address.</p>
+
+    <div id="forgot-msg" class="msg"></div>
+
+    <div class="field">
+      <label>Email</label>
+      <input id="fp-email" type="email" placeholder="you@example.com"/>
+    </div>
+
+    <div class="field">
+      <label>New Password</label>
+      <input id="fp-pass" type="password" placeholder="New password"/>
+    </div>
+
+    <div class="field">
+      <label>Confirm Password</label>
+      <input id="fp-pass2" type="password" placeholder="Repeat new password"/>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn" onclick="resetPassword()">Reset Password</button>
+      <button class="btn cancel-btn" onclick="closeForgotPassword()">Cancel</button>
+    </div>
+
+  </div>
+</div>
+
+<footer>© 2026 <span>SherigSpace</span></footer>
 
 <script>
 // ── HELPERS ──
-function DB_get(k){ try{ return JSON.parse(localStorage.getItem(k)||'null') }catch{ return null } }
-function DB_set(k,v){ localStorage.setItem(k,JSON.stringify(v)) }
-function showMsg(id,msg,type){ const el=document.getElementById(id); el.textContent=msg; el.className='msg '+type }
+function DB_get(k){
+  try{
+    return JSON.parse(localStorage.getItem(k)||'null')
+  }catch{
+    return null
+  }
+}
+
+function DB_set(k,v){
+  localStorage.setItem(k,JSON.stringify(v))
+}
+
+function showMsg(id,msg,type){
+  const el=document.getElementById(id);
+  el.textContent=msg;
+  el.className='msg '+type
+}
 
 // ── TAB SWITCH ──
 function switchTab(t){
-  document.querySelectorAll('.tab').forEach((el,i)=>el.classList.toggle('on',(t==='login'&&i===0)||(t==='signup'&&i===1)));
+  document.querySelectorAll('.tab').forEach((el,i)=>
+    el.classList.toggle('on',(t==='login'&&i===0)||(t==='signup'&&i===1))
+  );
+
   document.getElementById('f-login').classList.toggle('on', t==='login');
   document.getElementById('f-signup').classList.toggle('on', t==='signup');
 }
@@ -139,63 +266,156 @@ function switchTab(t){
 // ── PASSWORD STRENGTH ──
 function checkStrength(v){
   const bar = document.getElementById('sbar');
+
   let score = 0;
+
   if(v.length>=6) score++;
   if(v.length>=10) score++;
   if(/[A-Z]/.test(v)) score++;
   if(/[0-9]/.test(v)) score++;
   if(/[^A-Za-z0-9]/.test(v)) score++;
+
   const pct = [0,20,40,65,85,100][score];
   const col = ['#e05c5c','#e05c5c','#e8a84c','#c9a84c','#4caf84','#4caf84'][score];
-  bar.style.width=pct+'%'; bar.style.background=col;
+
+  bar.style.width=pct+'%';
+  bar.style.background=col;
 }
 
 // ── SIGNUP ──
 function doSignup(e){
   e.preventDefault();
+
   const name  = document.getElementById('s-name').value.trim();
   const email = document.getElementById('s-email').value.trim().toLowerCase();
   const pass  = document.getElementById('s-pass').value;
   const pass2 = document.getElementById('s-pass2').value;
 
-  if(pass.length<6){ showMsg('signup-msg','Password must be at least 6 characters.','err'); return; }
-  if(pass!==pass2){ showMsg('signup-msg','Passwords do not match.','err'); return; }
+  if(pass.length<6){
+    showMsg('signup-msg','Password must be at least 6 characters.','err');
+    return;
+  }
+
+  if(pass!==pass2){
+    showMsg('signup-msg','Passwords do not match.','err');
+    return;
+  }
 
   const users = DB_get('edu_users')||[];
-  if(users.find(u=>u.email===email)){ showMsg('signup-msg','An account with this email already exists.','err'); return; }
 
-  // simple hash (not cryptographic — for local/demo use)
+  if(users.find(u=>u.email===email)){
+    showMsg('signup-msg','An account with this email already exists.','err');
+    return;
+  }
+
   const hashed = btoa(pass+'__edu__'+email);
-  const user = { id: Date.now().toString(36), name, email, hashed, role:'user', joined: new Date().toISOString(), downloads:[], comments:[] };
+
+  const user = {
+    id: Date.now().toString(36),
+    name,
+    email,
+    hashed,
+    role:'user',
+    joined: new Date().toISOString(),
+    downloads:[],
+    comments:[]
+  };
+
   users.push(user);
+
   DB_set('edu_users', users);
 
   showMsg('signup-msg','Account created! Logging you in…','ok');
-  setTimeout(()=>{ loginUser(user); }, 900);
+
+  setTimeout(()=>{
+    loginUser(user);
+  },900);
 }
 
 // ── LOGIN ──
 function doLogin(e){
   e.preventDefault();
+
   const email = document.getElementById('l-email').value.trim().toLowerCase();
   const pass  = document.getElementById('l-pass').value;
+
   const hashed = btoa(pass+'__edu__'+email);
 
   const users = DB_get('edu_users')||[];
+
   const user = users.find(u=>u.email===email && u.hashed===hashed);
-  if(!user){ showMsg('login-msg','Incorrect email or password.','err'); return; }
+
+  if(!user){
+    showMsg('login-msg','Incorrect email or password.','err');
+    return;
+  }
 
   loginUser(user);
 }
 
 function loginUser(user){
-  DB_set('edu_session',{ id:user.id, name:user.name, email:user.email, role:user.role });
+  DB_set('edu_session',{
+    id:user.id,
+    name:user.name,
+    email:user.email,
+    role:user.role
+  });
+
   window.location.href = 'index.html';
 }
 
-// ── AUTO-REDIRECT if already logged in ──
+// ── FORGOT PASSWORD ──
+function openForgotPassword(){
+  document.getElementById('forgotModal').classList.add('show');
+}
+
+function closeForgotPassword(){
+  document.getElementById('forgotModal').classList.remove('show');
+  document.getElementById('forgot-msg').className='msg';
+}
+
+function resetPassword(){
+
+  const email = document.getElementById('fp-email').value.trim().toLowerCase();
+  const pass  = document.getElementById('fp-pass').value;
+  const pass2 = document.getElementById('fp-pass2').value;
+
+  const users = DB_get('edu_users') || [];
+
+  const userIndex = users.findIndex(u => u.email === email);
+
+  if(userIndex === -1){
+    showMsg('forgot-msg','No account found with this email.','err');
+    return;
+  }
+
+  if(pass.length < 6){
+    showMsg('forgot-msg','Password must be at least 6 characters.','err');
+    return;
+  }
+
+  if(pass !== pass2){
+    showMsg('forgot-msg','Passwords do not match.','err');
+    return;
+  }
+
+  users[userIndex].hashed = btoa(pass + '__edu__' + email);
+
+  DB_set('edu_users', users);
+
+  showMsg('forgot-msg','Password reset successful!','ok');
+
+  setTimeout(()=>{
+    closeForgotPassword();
+  },1200);
+}
+
+// ── AUTO REDIRECT ──
 const session = DB_get('edu_session');
-if(session) window.location.href='index.html';
+
+if(session){
+  window.location.href='index.html';
+}
 </script>
 </body>
 </html>
