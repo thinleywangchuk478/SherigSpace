@@ -15,8 +15,6 @@ html{scroll-behavior:smooth}
 body{font-family:var(--font-en);background:var(--bg);color:var(--text);overflow-x:hidden;transition:background .35s,color .35s}
 [data-lang="dz"] h1,[data-lang="dz"] h2,[data-lang="dz"] h3,[data-lang="dz"] h4,[data-lang="dz"] p,[data-lang="dz"] span:not(.t-icon),[data-lang="dz"] a,[data-lang="dz"] li,[data-lang="dz"] button{font-family:var(--font-dz)!important;line-height:2;letter-spacing:0}
 [data-lang="dz"] .hero-title,[data-lang="dz"] .section-title{font-family:'Jomolhari',sans-serif!important;line-height:1.8}
-
-/* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:200;background:var(--nav-bg);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:space-between;padding:0 5%;height:68px;border-bottom:1px solid var(--border);gap:1rem}
 .nav-logo{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--gold);text-decoration:none;flex-shrink:0}
 .nav-links{display:flex;gap:1.8rem;list-style:none}
@@ -34,8 +32,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:var(--nav-bg);bac
 .t-icon{position:absolute;top:50%;transform:translateY(-50%);font-size:.62rem;pointer-events:none;transition:opacity .3s}
 .t-icon.moon{left:4px}.t-icon.sun{right:4px;opacity:0}
 [data-theme="light"] .t-icon.moon{opacity:0}[data-theme="light"] .t-icon.sun{opacity:1}
-
-/* USER MENU */
 .user-btn{display:flex;align-items:center;gap:.45rem;padding:5px 11px;background:rgba(201,168,76,.12);border:1px solid var(--border);border-radius:20px;cursor:pointer;color:var(--gold);font-size:.8rem;font-weight:600;transition:background .2s;position:relative}
 .user-btn:hover{background:rgba(201,168,76,.22)}
 .user-avatar{width:22px;height:22px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.65rem;color:#1a2340;font-weight:700}
@@ -47,8 +43,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:var(--nav-bg);bac
 .udrop-sep{height:1px;background:var(--border);margin:.2rem 0}
 .login-btn{padding:6px 14px;background:var(--gold);border:none;border-radius:3px;color:#1a2340;font-size:.8rem;font-weight:700;cursor:pointer;font-family:var(--font-en);transition:background .2s;text-decoration:none;display:inline-block}
 .login-btn:hover{background:var(--gold-light)}
-
-/* HERO */
 #home{min-height:100vh;background:linear-gradient(135deg,var(--hero1) 0%,var(--hero2) 60%,var(--hero3) 100%);display:flex;align-items:center;padding:100px 5% 60px;position:relative;overflow:hidden}
 #home::before{content:'';position:absolute;top:-80px;right:-80px;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,rgba(201,168,76,.12) 0%,transparent 70%);pointer-events:none}
 #home::after{content:'';position:absolute;bottom:-60px;left:10%;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(201,168,76,.07) 0%,transparent 70%);pointer-events:none}
@@ -66,16 +60,12 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:var(--nav-bg);bac
 .stat-card{background:rgba(255,255,255,.06);border:1px solid rgba(201,168,76,.2);border-left:3px solid var(--gold);border-radius:4px;padding:1.2rem 1.5rem}
 .stat-card h3{font-family:'Playfair Display',serif;font-size:2rem;color:var(--gold);font-weight:700}
 .stat-card p{font-size:.82rem;color:rgba(255,255,255,.55);margin-top:2px;text-transform:uppercase;letter-spacing:.07em}
-
-/* SECTIONS */
 section{padding:80px 5%}
 .inner{max-width:1100px;margin:auto}
 .section-label{font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:.6rem}
 .section-title{font-family:'Playfair Display',serif;font-size:clamp(1.9rem,3.5vw,2.7rem);font-weight:700;color:var(--text);line-height:1.2;margin-bottom:.8rem;transition:color .35s}
 .section-desc{color:var(--text2);font-size:1rem;line-height:1.75;max-width:560px;margin-bottom:3rem;transition:color .35s}
 .divider{width:48px;height:3px;background:var(--gold);border-radius:2px;margin:1rem 0 1.5rem}
-
-/* LESSONS */
 #lessons{background:var(--surface);transition:background .35s}
 .lessons-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.8rem}
 .lesson-card{background:var(--card-bg);border:1px solid var(--card-border);border-top:3px solid var(--gold);border-radius:5px;padding:1.8rem;transition:transform .2s,box-shadow .2s,background .35s;cursor:pointer}
@@ -86,8 +76,6 @@ section{padding:80px 5%}
 .lesson-meta{display:flex;gap:.8rem;flex-wrap:wrap;font-size:.76rem;color:var(--text2)}
 .badge{display:inline-block;background:rgba(201,168,76,.15);font-size:.7rem;font-weight:600;letter-spacing:.06em;padding:3px 9px;border-radius:20px;text-transform:uppercase;margin-bottom:.8rem;color:#8a6820}
 [data-theme="dark"] .badge{color:var(--gold-light)}
-
-/* RESOURCES — login wall */
 #resources{background:var(--section-alt);transition:background .35s}
 .resources-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:1.5rem}
 .resource-card{background:var(--surface);border:1px solid var(--card-border);border-radius:5px;padding:1.5rem;display:flex;align-items:flex-start;gap:1rem;transition:transform .2s,box-shadow .2s;cursor:pointer;text-decoration:none;position:relative;overflow:hidden}
@@ -100,8 +88,6 @@ section{padding:80px 5%}
 .locked-overlay span{font-size:1.4rem}
 .locked-overlay p{font-size:.75rem;color:rgba(255,255,255,.7);text-align:center;padding:0 1rem}
 .locked-overlay a{font-size:.75rem;color:var(--gold);font-weight:600;text-decoration:none;border-bottom:1px solid rgba(201,168,76,.3)}
-
-/* VIDEOS */
 #videos{background:var(--surface);transition:background .35s}
 .videos-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.8rem}
 .video-card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:5px;overflow:hidden;transition:transform .2s,box-shadow .2s;cursor:pointer;text-decoration:none;display:block}
@@ -112,8 +98,6 @@ section{padding:80px 5%}
 .video-body h3{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--text);margin-bottom:.4rem;font-weight:600;transition:color .35s}
 .video-body p{font-size:.83rem;color:var(--text2);line-height:1.5}
 .video-meta{display:flex;gap:.8rem;font-size:.75rem;color:var(--text2);margin-top:.6rem}
-
-/* BLOG */
 #blog{background:var(--section-alt);transition:background .35s}
 .blog-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.8rem}
 .blog-card{border:1px solid var(--card-border);border-radius:5px;overflow:hidden;transition:transform .2s,box-shadow .2s}
@@ -123,8 +107,6 @@ section{padding:80px 5%}
 .blog-body h3{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--text);margin-bottom:.5rem;font-weight:600}
 .blog-body p{font-size:.85rem;color:var(--text2);line-height:1.6;margin-bottom:.8rem}
 .blog-date{font-size:.76rem;color:var(--gold);font-weight:500;margin-bottom:.4rem}
-
-/* COMMENTS */
 .comments-wrap{margin-top:1rem}
 .comments-wrap h4{font-size:.85rem;font-weight:600;color:var(--text2);margin-bottom:.75rem}
 .comment-list{display:flex;flex-direction:column;gap:.6rem;margin-bottom:.75rem}
@@ -137,8 +119,6 @@ section{padding:80px 5%}
 .comment-form button{padding:7px 14px;background:var(--gold);border:none;border-radius:4px;color:#1a2340;font-weight:600;font-size:.8rem;cursor:pointer;font-family:var(--font-en);white-space:nowrap}
 .comment-login-note{font-size:.78rem;color:var(--text2)}
 .comment-login-note a{color:var(--gold);text-decoration:none}
-
-/* ABOUT */
 #about{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-light) 100%)}
 .about-inner{max-width:1100px;margin:auto;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
 .about-avatar-wrap{position:relative}
@@ -152,8 +132,6 @@ section{padding:80px 5%}
 .skill-tag{background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);color:var(--gold-light);font-size:.8rem;padding:5px 12px;border-radius:20px}
 .about-contact{margin-top:2rem}
 .about-contact p{color:rgba(255,255,255,.55);font-size:.9rem;margin-bottom:1rem}
-
-/* PROFILE MODAL */
 .modal-overlay{display:none;position:fixed;inset:0;z-index:400;background:rgba(0,0,0,.7);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:1rem}
 .modal-overlay.open{display:flex}
 .modal-box{background:#131c2e;border:1px solid var(--border);border-radius:8px;width:100%;max-width:460px;overflow:hidden}
@@ -163,27 +141,21 @@ section{padding:80px 5%}
 .modal-body{padding:1.4rem}
 .profile-avatar{width:64px;height:64px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.6rem;color:#1a2340;font-weight:700;margin:0 auto 1rem}
 .profile-name{text-align:center;font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--text);margin-bottom:.2rem}
-.profile-email{text-align:center;font-size:.82rem;color:var(--text2);margin-bottom:1.5rem}
+.profile-email{text-align:center;font-size:.82rem;color:var(--text2);margin-bottom:.5rem}
+.profile-class{text-align:center;font-size:.82rem;color:var(--gold);margin-bottom:1.5rem;font-weight:600}
 .profile-stat{display:flex;gap:1rem;justify-content:center;margin-bottom:1.5rem}
 .pstat{text-align:center;background:rgba(201,168,76,.08);border:1px solid var(--border);border-radius:5px;padding:.6rem 1.1rem}
 .pstat .pn{font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--gold);font-weight:700}
 .pstat .pl{font-size:.7rem;color:var(--text2);text-transform:uppercase;letter-spacing:.06em}
-
-/* EMPTY */
 .empty-state{text-align:center;padding:3rem 1rem;color:var(--text2);grid-column:1/-1}
 .empty-state .ei{font-size:2.5rem;margin-bottom:.75rem}
 .empty-state p{font-size:.88rem;margin-bottom:.75rem}
 .empty-state a{color:var(--gold);font-size:.82rem;text-decoration:none}
-
-/* FOOTER */
 footer{background:var(--footer-bg);color:rgba(255,255,255,.4);text-align:center;padding:1.8rem 5%;font-size:.83rem;transition:background .35s}
 footer .gold{color:var(--gold)}
-
-/* ANIMATIONS */
 @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
 .fade-in{opacity:0;transform:translateY(20px);transition:opacity .6s,transform .6s}
 .fade-in.visible{opacity:1;transform:translateY(0)}
-
 @media(max-width:768px){.hero-inner,.about-inner{grid-template-columns:1fr;gap:2.5rem}.hero-stats{flex-direction:row;flex-wrap:wrap}.stat-card{flex:1;min-width:110px}}
 @media(max-width:560px){.nav-links{display:none}}
 </style>
@@ -222,9 +194,9 @@ footer .gold{color:var(--gold)}
       </div>
     </div>
     <div class="hero-stats">
-      <div class="stat-card"><h3 id="st-lessons">0</h3><p data-en="Lessons" data-dz="སློབ་ཚན།">Lessons</p></div>
-      <div class="stat-card"><h3 id="st-videos">0</h3><p  data-en="Videos"  data-dz="བརྙན་ཐུང་།">Videos</p></div>
-      <div class="stat-card"><h3 id="st-users">0</h3><p   data-en="Members" data-dz="འཐུས་མི།">Members</p></div>
+      <div class="stat-card"><h3 id="st-lessons">…</h3><p data-en="Lessons" data-dz="སློབ་ཚན།">Lessons</p></div>
+      <div class="stat-card"><h3 id="st-videos">…</h3><p data-en="Videos" data-dz="བརྙན་ཐུང་།">Videos</p></div>
+      <div class="stat-card"><h3 id="st-users">…</h3><p data-en="Members" data-dz="འཐུས་མི།">Members</p></div>
     </div>
   </div>
 </section>
@@ -294,14 +266,14 @@ footer .gold{color:var(--gold)}
       <div class="divider"></div>
       <p class="section-desc" data-en="A dedicated teacher sharing lessons, resources, and videos with learners everywhere." data-dz="ལྷག་བསམ་རྣམ་དག་གི་སྒོ་ལས་ སློབ་སྟོན་འབད་ནི་ལུ་སྤྲོ་བ་ཡོདཔ་ལས་ སློབ་སྟོན་མཁོ་ཆས་དང་ འཆར་གཞི། ཐབས་ཤེས་ཚུ་བརྗེ་སོར་འབདཝ་ཨིན།">A dedicated teacher sharing lessons, resources, and videos with learners everywhere.</p>
       <div class="about-skills">
-        <span class="skill-tag" data-en="Graphic Design" data-dz="Graphic Design">Curriculum Design</span>
+        <span class="skill-tag" data-en="Curriculum Design" data-dz="Curriculum Design">Curriculum Design</span>
         <span class="skill-tag" data-en="Project-Based Learning" data-dz="ལས་འགུལ་ཐོག་ལྷབ་སྦྱང་།">Project-Based Learning</span>
         <span class="skill-tag" data-en="Student Engagement" data-dz="སློབ་ཕྲུག་འབྲེལ་གཏོགས།">Student Engagement</span>
         <span class="skill-tag" data-en="EdTech" data-dz="སློབ་སྟོན་ཐབས་ལམ་གསརཔ།">EdTech</span>
       </div>
       <div class="about-contact">
         <p data-en="Want to collaborate or get in touch?" data-dz="མཉམ་འབྲེལ་སྦེ་ ལཱ་འབད་ནི་/འབྲེལ་བ་འཐབ་ནི?">Want to collaborate or get in touch?</p>
-        <a href="thinleywangchuk478@gmail.com" class="btn-primary" data-en="✉ Contact Me" data-dz="ང་དང་་འབྲེལ་བ་འཐབ།">✉ Contact Me</a>
+        <a href="mailto:thinleywangchuk478@gmail.com" class="btn-primary" data-en="✉ Contact Me" data-dz="ང་དང་་འབྲེལ་བ་འཐབ།">✉ Contact Me</a>
       </div>
     </div>
   </div>
@@ -317,15 +289,20 @@ footer .gold{color:var(--gold)}
   </div>
 </div>
 
-<script>
+<script type="module">
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+
+const SUPABASE_URL = 'https://kgqlcjdjdhssactfezwi.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtncWxjamRqZGhzc2FjdGZlendpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk0NTE2MzQsImV4cCI6MjA5NTAyNzYzNH0.6hJpg9Zput8wnuDfq7wzb5dRC2KkuRmkmaz870U0Lto';
+const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+
 const html = document.documentElement;
 const ICONS={Mathematics:'📐',Science:'🌍','Language Arts':'✍️',History:'🏛️',Technology:'💻','Social Studies':'🗺️',Arts:'🎨','Physical Education':'⚽',Other:'📖'};
 const RICONS={PDF:'📄',DOCX:'📝',Image:'🗺️','Video Link':'🎥',Spreadsheet:'📊',Presentation:'🖥️',Other:'📁'};
 const GRADS=['linear-gradient(135deg,#1a2340,#253056)','linear-gradient(135deg,#1e3a5f,#1a2340)','linear-gradient(135deg,#253056,#1e3a5f)'];
 const EMOJIS=['📖','🌱','🛠️','💡','🎯','🔬'];
 
-function DB(k){ try{ return JSON.parse(localStorage.getItem(k)||'[]') }catch{ return [] } }
-function DBset(k,v){ localStorage.setItem(k,JSON.stringify(v)) }
+function lang(){ return html.getAttribute('data-lang'); }
 function session(){ try{ return JSON.parse(localStorage.getItem('edu_session')||'null') }catch{ return null } }
 
 // ── AUTH NAV ──
@@ -351,142 +328,126 @@ function renderNav(){
   }
 }
 
-function logout(){ localStorage.removeItem('edu_session'); location.reload(); }
+window.logout = async function(){
+  await supabase.auth.signOut();
+  localStorage.removeItem('edu_session');
+  location.reload();
+};
 
-// ── PROFILE ──
-function openProfile(){
-  const s=session(); if(!s) return;
-  const users=DB('edu_users');
-  const user=users.find(u=>u.id===s.id)||{downloads:[],comments:[]};
+// ── PROFILE MODAL ──
+window.openProfile = async function(){
+  const s = session(); if(!s) return;
+  const { data: profile } = await supabase.from('profiles').select('*').eq('id', s.id).single();
+  const joined = profile?.joined_at ? new Date(profile.joined_at).toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'}) : '—';
   document.getElementById('profile-body').innerHTML=`
     <div class="profile-avatar">${s.name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase()}</div>
     <div class="profile-name">${s.name}</div>
     <div class="profile-email">${s.email}</div>
+    <div class="profile-class">📚 ${profile?.class_grade || 'Member'}</div>
     <div class="profile-stat">
-      <div class="pstat"><div class="pn">${(user.downloads||[]).length}</div><div class="pl">Downloads</div></div>
-      <div class="pstat"><div class="pn">${(user.comments||[]).length}</div><div class="pl">Comments</div></div>
+      <div class="pstat"><div class="pn">${new Date(profile?.joined_at||Date.now()).toLocaleDateString('en-US',{month:'short',year:'numeric'})}</div><div class="pl">Joined</div></div>
+      <div class="pstat"><div class="pn">${profile?.role||'user'}</div><div class="pl">Role</div></div>
     </div>
     <button onclick="logout()" style="width:100%;padding:10px;background:rgba(224,92,92,.12);border:1px solid rgba(224,92,92,.25);border-radius:4px;color:#e05c5c;font-family:'DM Sans',sans-serif;font-size:.88rem;font-weight:600;cursor:pointer">🔒 Log Out</button>`;
   document.getElementById('profile-modal').classList.add('open');
+};
+window.closeProfile = () => document.getElementById('profile-modal').classList.remove('open');
+document.getElementById('profile-modal').addEventListener('click', e=>{ if(e.target===document.getElementById('profile-modal')) closeProfile(); });
+
+// ── LOAD STATS (live from Supabase) ──
+async function loadStats(){
+  const [{ count: lCount }, { count: vCount }, { count: uCount }] = await Promise.all([
+    supabase.from('lessons').select('*',{count:'exact',head:true}),
+    supabase.from('videos').select('*',{count:'exact',head:true}),
+    supabase.from('profiles').select('*',{count:'exact',head:true})
+  ]);
+  document.getElementById('st-lessons').textContent = lCount ?? 0;
+  document.getElementById('st-videos').textContent  = vCount ?? 0;
+  document.getElementById('st-users').textContent   = uCount ?? 0;
 }
-function closeProfile(){ document.getElementById('profile-modal').classList.remove('open'); }
-document.getElementById('profile-modal').addEventListener('click',e=>{ if(e.target===document.getElementById('profile-modal')) closeProfile(); });
 
-// ── RENDER CONTENT ──
-function lang(){ return html.getAttribute('data-lang'); }
-
-function renderLessons(){
-  const items=DB('edu_lessons');
-  document.getElementById('st-lessons').textContent=items.length||'0';
-  const g=document.getElementById('lessons-grid');
-  if(!items.length){ g.innerHTML=`<div class="empty-state fade-in"><div class="ei">📚</div><p data-en="No lessons yet" data-dz="སློབ་ཚན་མི་འདུག">No lessons yet</p></div>`; return; }
-  g.innerHTML=items.map(l=>{
-    const icon=ICONS[l.subject]||'📖';
-    const title=lang()==='dz'&&l.dz?l.dz:l.title;
-    const comments=DB('edu_comments').filter(c=>c.itemId===l.id);
-    const s=session();
-    const commentSection=`<div class="comments-wrap">
-      <h4>💬 Comments (${comments.length})</h4>
-      <div class="comment-list">${comments.slice(-3).map(c=>`<div class="comment-item"><div class="comment-author">${c.name}</div><div class="comment-text">${c.text}</div></div>`).join('')}</div>
-      ${s?`<div class="comment-form"><input id="ci-${l.id}" placeholder="Write a comment..." onkeydown="if(event.key==='Enter') addComment('${l.id}',this)"/><button onclick="addComment('${l.id}',document.getElementById('ci-${l.id}'))">Post</button></div>`:`<p class="comment-login-note">📝 <a href="login.html">Log in</a> to comment</p>`}
-    </div>`;
-    return`<div class="lesson-card fade-in" ${l.url?`onclick="window.open('${l.url}','_blank')"`:''}> 
+// ── RENDER LESSONS ──
+async function renderLessons(){
+  const { data: items } = await supabase.from('lessons').select('*').order('created_at',{ascending:false});
+  const g = document.getElementById('lessons-grid');
+  if(!items?.length){ g.innerHTML=`<div class="empty-state fade-in"><div class="ei">📚</div><p>No lessons yet</p></div>`; return; }
+  const s = session();
+  g.innerHTML = items.map(l => {
+    const icon = ICONS[l.subject]||'📖';
+    const title = lang()==='dz' && l.dz ? l.dz : l.title;
+    return `<div class="lesson-card fade-in" ${l.url?`onclick="window.open('${l.url}','_blank')"`:''}>
       <div class="lesson-icon">${icon}</div>
       <div class="badge">${l.subject||'General'}</div>
       <h3>${title}</h3>
       <p>${l.desc||''}</p>
       <div class="lesson-meta">${l.duration?`<span>⏱ ${l.duration}</span>`:''} ${l.slides?`<span>📄 ${l.slides}</span>`:''} ${l.level?`<span>🎯 ${l.level}</span>`:''}</div>
-      ${commentSection}
     </div>`;
   }).join('');
 }
 
-function addComment(itemId, input){
-  const s=session(); if(!s){ window.location='login.html'; return; }
-  const text=input.value.trim(); if(!text) return;
-  const comments=DB('edu_comments');
-  comments.push({id:Date.now().toString(36),itemId,userId:s.id,name:s.name,text,at:new Date().toISOString()});
-  DBset('edu_comments',comments);
-  // update user comment count
-  const users=DB('edu_users');
-  const u=users.find(u=>u.id===s.id);
-  if(u){ u.comments=(u.comments||[]); u.comments.push(itemId); DBset('edu_users',users); }
-  input.value='';
-  renderLessons(); observeFadeIns();
-}
-
-function renderResources(){
-  const items=DB('edu_resources');
-  const g=document.getElementById('resources-grid');
-  const s=session();
-  if(!items.length){ g.innerHTML=`<div class="empty-state fade-in"><div class="ei">📁</div><p data-en="No resources yet" data-dz="ཡིག་ཆ་མི་འདུག">No resources yet</p></div>`; return; }
-  g.innerHTML=items.map(r=>{
-    const icon=RICONS[r.rtype]||'📁';
-    const title=lang()==='dz'&&r.dz?r.dz:r.title;
-    const locked=!s;
-    return`<div class="resource-card fade-in" onclick="${s&&r.url?`trackDownload('${r.id}');window.open('${r.url}','_blank')`:`window.location='login.html'`}">
+// ── RENDER RESOURCES ──
+async function renderResources(){
+  const { data: items } = await supabase.from('resources').select('*').order('created_at',{ascending:false});
+  const g = document.getElementById('resources-grid');
+  const s = session();
+  if(!items?.length){ g.innerHTML=`<div class="empty-state fade-in"><div class="ei">📁</div><p>No resources yet</p></div>`; return; }
+  g.innerHTML = items.map(r => {
+    const icon = RICONS[r.rtype]||'📁';
+    const title = lang()==='dz' && r.dz ? r.dz : r.title;
+    const locked = !s;
+    return `<div class="resource-card fade-in" onclick="${s&&r.url?`window.open('${r.url}','_blank')`:`window.location='login.html'`}">
       <div class="resource-icon">${icon}</div>
       <div class="resource-info"><h4>${title}</h4><p>${r.desc||''}</p><div class="resource-type">${r.rtype||''}${r.size?' · '+r.size:''}</div></div>
-      ${locked?`<div class="locked-overlay"><span>🔒</span><p data-en="Sign in to download" data-dz="འཇི་ལེན་གྱི་ཆེད་ནང་འཛུལ">Sign in to download</p><a href="login.html">Log in →</a></div>`:''}
+      ${locked?`<div class="locked-overlay"><span>🔒</span><p>Sign in to download</p><a href="login.html">Log in →</a></div>`:''}
     </div>`;
   }).join('');
 }
 
-function trackDownload(id){
-  const s=session(); if(!s) return;
-  const users=DB('edu_users');
-  const u=users.find(u=>u.id===s.id);
-  if(u){ u.downloads=u.downloads||[]; if(!u.downloads.includes(id)){ u.downloads.push(id); DBset('edu_users',users); } }
-}
-
-function renderVideos(){
-  const items=DB('edu_videos');
-  document.getElementById('st-videos').textContent=items.length||'0';
-  const g=document.getElementById('videos-grid');
-  if(!items.length){ g.innerHTML=`<div class="empty-state fade-in"><div class="ei">🎥</div><p data-en="No videos yet" data-dz="བརྙན་ཐམས་མི་འདུག">No videos yet</p></div>`; return; }
-  g.innerHTML=items.map(v=>{
-    const title=lang()==='dz'&&v.dz?v.dz:v.title;
-    const icon=ICONS[v.subject]||'🎬';
-    return`<a class="video-card fade-in" ${v.url?`href="${v.url}" target="_blank"`:''}>
+// ── RENDER VIDEOS ──
+async function renderVideos(){
+  const { data: items } = await supabase.from('videos').select('*').order('created_at',{ascending:false});
+  const g = document.getElementById('videos-grid');
+  if(!items?.length){ g.innerHTML=`<div class="empty-state fade-in"><div class="ei">🎥</div><p>No videos yet</p></div>`; return; }
+  g.innerHTML = items.map(v => {
+    const title = lang()==='dz' && v.dz ? v.dz : v.title;
+    const icon = ICONS[v.subject]||'🎬';
+    return `<a class="video-card fade-in" ${v.url?`href="${v.url}" target="_blank"`:''}>
       <div class="video-thumb">${icon}<div class="play-btn">▶</div></div>
       <div class="video-body"><h3>${title}</h3><p>${v.desc||''}</p><div class="video-meta">${v.duration?`<span>⏱ ${v.duration}</span>`:''} ${v.subject?`<span>📚 ${v.subject}</span>`:''}</div></div>
     </a>`;
   }).join('');
 }
 
-function renderArticles(){
-  const items=DB('edu_articles');
-  const g=document.getElementById('blog-grid');
-  if(!items.length){ g.innerHTML=`<div class="empty-state fade-in"><div class="ei">✍️</div><p data-en="No articles yet" data-dz="རྩོམ་ཡིག་མི་འདུག">No articles yet</p></div>`; return; }
-  g.innerHTML=items.map((a,i)=>{
-    const title=lang()==='dz'&&a.dz?a.dz:a.title;
-    const date=a.date?new Date(a.date).toLocaleDateString('en-US',{month:'long',year:'numeric'}):'';
-    return`<div class="blog-card fade-in" ${a.url?`onclick="window.open('${a.url}','_blank')"`:''} style="cursor:pointer">
+// ── RENDER ARTICLES ──
+async function renderArticles(){
+  const { data: items } = await supabase.from('articles').select('*').order('created_at',{ascending:false});
+  const g = document.getElementById('blog-grid');
+  if(!items?.length){ g.innerHTML=`<div class="empty-state fade-in"><div class="ei">✍️</div><p>No articles yet</p></div>`; return; }
+  g.innerHTML = items.map((a,i) => {
+    const title = lang()==='dz' && a.dz ? a.dz : a.title;
+    const date = a.date ? new Date(a.date).toLocaleDateString('en-US',{month:'long',year:'numeric'}) : '';
+    return `<div class="blog-card fade-in" ${a.url?`onclick="window.open('${a.url}','_blank')"`:''} style="cursor:pointer">
       <div class="blog-thumb" style="background:${GRADS[i%3]}">${EMOJIS[i%6]}</div>
       <div class="blog-body"><div class="blog-date">${date}</div><h3>${title}</h3><p>${a.desc||''}</p></div>
     </div>`;
   }).join('');
 }
 
-function renderAll(){
+async function renderAll(){
   renderNav();
-  renderLessons();
-  renderResources();
-  renderVideos();
-  renderArticles();
-  document.getElementById('st-users').textContent=DB('edu_users').length||'0';
+  await Promise.all([renderLessons(), renderResources(), renderVideos(), renderArticles(), loadStats()]);
   observeFadeIns();
 }
 
 // ── THEME ──
-html.setAttribute('data-theme',localStorage.getItem('eduTheme')||'dark');
+html.setAttribute('data-theme', localStorage.getItem('eduTheme')||'dark');
 document.getElementById('themeToggle').addEventListener('click',()=>{
-  const n=html.getAttribute('data-theme')==='dark'?'light':'dark';
+  const n = html.getAttribute('data-theme')==='dark' ? 'light' : 'dark';
   html.setAttribute('data-theme',n); localStorage.setItem('eduTheme',n);
 });
 
 // ── LANGUAGE ──
-const langBtns=document.querySelectorAll('[data-lang-btn]');
+const langBtns = document.querySelectorAll('[data-lang-btn]');
 function applyLang(l){
   html.setAttribute('data-lang',l); localStorage.setItem('eduLang',l);
   document.querySelectorAll('[data-en]').forEach(el=>{
@@ -494,27 +455,47 @@ function applyLang(l){
     if(val.includes('<')) el.innerHTML=val; else el.textContent=val;
   });
   langBtns.forEach(b=>b.classList.toggle('on',b.getAttribute('data-lang-btn')===l));
-  renderAll();
 }
-langBtns.forEach(b=>b.addEventListener('click',()=>applyLang(b.getAttribute('data-lang-btn'))));
+langBtns.forEach(b=>b.addEventListener('click',()=>{ applyLang(b.getAttribute('data-lang-btn')); renderAll(); }));
 applyLang(localStorage.getItem('eduLang')||'en');
 
 // ── FADE IN ──
 function observeFadeIns(){
-  const io=new IntersectionObserver((entries)=>{
+  const io = new IntersectionObserver((entries)=>{
     entries.forEach((e,i)=>{ if(e.isIntersecting){ setTimeout(()=>e.target.classList.add('visible'),i*80); io.unobserve(e.target); }});
   },{threshold:.08});
   document.querySelectorAll('.fade-in:not(.visible)').forEach(el=>io.observe(el));
 }
 
 // ── ACTIVE NAV ──
-const secs=document.querySelectorAll('section[id]');
-const nls=document.querySelectorAll('.nav-links a');
+const secs = document.querySelectorAll('section[id]');
+const nls  = document.querySelectorAll('.nav-links a');
 window.addEventListener('scroll',()=>{
   let cur='';
   secs.forEach(s=>{ if(window.scrollY>=s.offsetTop-100) cur=s.id; });
   nls.forEach(a=>{ a.style.color=a.getAttribute('href')==='#'+cur?'var(--gold)':''; });
 });
+
+// ── SYNC SUPABASE SESSION → localStorage on page load ──
+(async ()=>{
+  const { data } = await supabase.auth.getSession();
+  if(data.session){
+    const uid = data.session.user.id;
+    const { data: profile } = await supabase.from('profiles').select('*').eq('id',uid).single();
+    if(profile){
+      localStorage.setItem('edu_session', JSON.stringify({
+        id: uid,
+        name: profile.name,
+        email: profile.email,
+        role: profile.role,
+        class_grade: profile.class_grade
+      }));
+    }
+  } else {
+    localStorage.removeItem('edu_session');
+  }
+  renderAll();
+})();
 </script>
 </body>
 </html>
