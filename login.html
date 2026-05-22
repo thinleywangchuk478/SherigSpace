@@ -233,18 +233,7 @@ footer span{color:var(--gold)}
 
 <footer>© 2026 <span>SherigSpace</span></footer>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <script>
-
-const supabaseUrl = 'https://kgqlcjdjdhssactfezwi.supabase.co'
-
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtncWxjamRqZGhzc2FjdGZlendpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk0NTE2MzQsImV4cCI6MjA5NTAyNzYzNH0.6hJpg9Zput8wnuDfq7wzb5dRC2KkuRmkmaz870U0Lto'
-const supabase = supabase.createClient(
-  supabaseUrl,
-  supabaseKey
-)
-
 // ── HELPERS ──
 function DB_get(k){
   try{
@@ -294,63 +283,74 @@ function checkStrength(v){
 }
 
 // ── SIGNUP ──
-async function doSignup(e){
-  e.preventDefault()
+function doSignup(e){
+  e.preventDefault();
 
-  const name = document.getElementById('s-name').value.trim()
-  const email = document.getElementById('s-email').value.trim()
-  const password = document.getElementById('s-pass').value
-  const confirm = document.getElementById('s-pass2').value
+  const name  = document.getElementById('s-name').value.trim();
+  const email = document.getElementById('s-email').value.trim().toLowerCase();
+  const pass  = document.getElementById('s-pass').value;
+  const pass2 = document.getElementById('s-pass2').value;
 
-  if(password !== confirm){
-    showMsg('signup-msg','Passwords do not match.','err')
-    return
+  if(pass.length<6){
+    showMsg('signup-msg','Password must be at least 6 characters.','err');
+    return;
   }
 
-  const { data, error } = await supabase.auth.signUp({
+  if(pass!==pass2){
+    showMsg('signup-msg','Passwords do not match.','err');
+    return;
+  }
+
+  const users = DB_get('edu_users')||[];
+
+  if(users.find(u=>u.email===email)){
+    showMsg('signup-msg','An account with this email already exists.','err');
+    return;
+  }
+
+  const hashed = btoa(pass+'__edu__'+email);
+
+  const user = {
+    id: Date.now().toString(36),
+    name,
     email,
-    password,
-    options:{
-      data:{
-        full_name:name
-      }
-    }
-  })
+    hashed,
+    role:'user',
+    joined: new Date().toISOString(),
+    downloads:[],
+    comments:[]
+  };
 
-  if(error){
-    showMsg('signup-msg', error.message, 'err')
-    return
-  }
+  users.push(user);
 
-  showMsg('signup-msg','Account created successfully!','ok')
+  DB_set('edu_users', users);
+
+  showMsg('signup-msg','Account created! Logging you in…','ok');
 
   setTimeout(()=>{
-    window.location.href='index.html'
-  },1000)
+    loginUser(user);
+  },900);
 }
 
 // ── LOGIN ──
-async function doLogin(e){
-  e.preventDefault()
+function doLogin(e){
+  e.preventDefault();
 
-  const email = document.getElementById('l-email').value.trim()
-  const password = document.getElementById('l-pass').value
+  const email = document.getElementById('l-email').value.trim().toLowerCase();
+  const pass  = document.getElementById('l-pass').value;
 
-  const { data, error } = await supabase.auth.signInWithPassword({
-    email,
-    password
-  })
+  const hashed = btoa(pass+'__edu__'+email);
 
-  if(error){
-    showMsg('login-msg', error.message, 'err')
-    return
+  const users = DB_get('edu_users')||[];
+
+  const user = users.find(u=>u.email===email && u.hashed===hashed);
+
+  if(!user){
+    showMsg('login-msg','Incorrect email or password.','err');
+    return;
   }
 
-  showMsg('login-msg','Login successful!','ok')
-
-  setTimeout(()=>{
-    window.location.href='index.html'
-  },1000)
+  loginUser(user);
 }
 
 function loginUser(user){
