@@ -9,8 +9,6 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{--gold:#c9a84c;--gold-light:#e8c97a;--navy:#0f1623;--navy2:#1a2340;--surface:#192035;--surface2:#202b4a;--border:rgba(201,168,76,0.2);--text:#e8e4dc;--text2:#9aa3b8;--red:#e05c5c;--green:#4caf84;--blue:#5c8de0}
 body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);min-height:100vh}
-
-/* ── ADMIN GATE ── */
 #gate{position:fixed;inset:0;z-index:9999;background:linear-gradient(135deg,#0f1623,#1a2340,#1a2f50);display:flex;align-items:center;justify-content:center;padding:1rem}
 #gate.hide{display:none}
 .gate-card{background:rgba(25,32,53,.98);border:1px solid var(--border);border-radius:10px;width:100%;max-width:380px;padding:2rem;text-align:center;box-shadow:0 24px 60px rgba(0,0,0,.5)}
@@ -25,8 +23,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);m
 .gate-err{font-size:.8rem;color:#f09090;margin-top:.6rem;min-height:1.1rem}
 .gate-hint{font-size:.75rem;color:var(--text2);margin-top:1rem}
 .gate-hint span{color:var(--gold);font-weight:600}
-
-/* ── LAYOUT ── */
 .layout{display:flex;min-height:100vh}
 .sidebar{width:220px;flex-shrink:0;background:#131c2e;border-right:1px solid var(--border);display:flex;flex-direction:column;position:sticky;top:0;height:100vh}
 .logo{padding:1.4rem 1.5rem;border-bottom:1px solid var(--border)}
@@ -41,21 +37,15 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);m
 .sfoot a:hover,.sfoot button:hover{background:rgba(201,168,76,.2)}
 .sfoot button.logout{background:rgba(224,92,92,.1);border-color:rgba(224,92,92,.25);color:var(--red)}
 .sfoot button.logout:hover{background:rgba(224,92,92,.2)}
-
-/* ── MAIN ── */
 .main{flex:1;padding:2rem;overflow-x:hidden}
 .page{display:none}.page.on{display:block}
 .phead{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.8rem;flex-wrap:wrap;gap:1rem}
 .ptitle{font-family:'Playfair Display',serif;font-size:1.7rem}
 .psub{font-size:.83rem;color:var(--text2);margin-top:3px}
-
-/* ── STATS ── */
 .stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:1rem;margin-bottom:2rem}
 .sbox{background:var(--surface);border:1px solid var(--border);border-top:2px solid var(--gold);border-radius:6px;padding:1.1rem 1.3rem}
 .sbox .n{font-family:'Playfair Display',serif;font-size:1.9rem;color:var(--gold);font-weight:700}
 .sbox .l{font-size:.75rem;color:var(--text2);text-transform:uppercase;letter-spacing:.08em;margin-top:2px}
-
-/* ── CARD ── */
 .card{background:var(--surface);border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:1.5rem}
 .card-head{display:flex;align-items:center;justify-content:space-between;padding:.9rem 1.4rem;border-bottom:1px solid var(--border)}
 .card-head h3{font-size:.95rem;font-weight:600}
@@ -66,8 +56,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);m
 .iname{font-weight:500;font-size:.88rem}
 .imeta{font-size:.76rem;color:var(--text2);margin-top:2px}
 .ibtns{display:flex;gap:.4rem}
-
-/* ── USERS TABLE ── */
 .utbl{width:100%;border-collapse:collapse;font-size:.85rem}
 .utbl th{text-align:left;padding:.7rem 1rem;font-size:.72rem;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.07em;border-bottom:1px solid var(--border)}
 .utbl td{padding:.8rem 1rem;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:middle}
@@ -76,16 +64,13 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);m
 .role-badge{font-size:.7rem;font-weight:600;padding:3px 8px;border-radius:10px;text-transform:uppercase}
 .role-user{background:rgba(92,141,224,.15);color:var(--blue)}
 .role-admin{background:rgba(201,168,76,.15);color:var(--gold)}
-
-/* ── BUTTONS ── */
 .btn{display:inline-flex;align-items:center;gap:.35rem;padding:8px 16px;border-radius:4px;font-size:.83rem;font-weight:600;cursor:pointer;border:none;font-family:'DM Sans',sans-serif;transition:all .2s}
 .btn-gold{background:var(--gold);color:#1a2340}.btn-gold:hover{background:var(--gold-light)}
 .btn-ghost{background:transparent;border:1px solid var(--border);color:var(--text2)}.btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
 .btn-edit{background:rgba(92,141,224,.12);border:1px solid rgba(92,141,224,.25);color:var(--blue)}.btn-edit:hover{background:rgba(92,141,224,.22)}
 .btn-del{background:rgba(224,92,92,.12);border:1px solid rgba(224,92,92,.25);color:var(--red)}.btn-del:hover{background:rgba(224,92,92,.22)}
 .btn-sm{padding:5px 9px;font-size:.76rem}
-
-/* ── MODAL ── */
+.btn:disabled{opacity:.5;cursor:not-allowed}
 .overlay{display:none;position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.75);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:1rem}
 .overlay.open{display:flex}
 .modal{background:#131c2e;border:1px solid var(--border);border-radius:8px;width:100%;max-width:520px;max-height:92vh;overflow-y:auto}
@@ -94,8 +79,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);m
 .mclose{background:none;border:none;color:var(--text2);font-size:1.3rem;cursor:pointer;padding:2px 6px}.mclose:hover{color:var(--text)}
 .mbody{padding:1.4rem;display:flex;flex-direction:column;gap:.9rem}
 .mfoot{padding:.9rem 1.4rem;border-top:1px solid var(--border);display:flex;gap:.7rem;justify-content:flex-end}
-
-/* ── FORM ── */
 .field{display:flex;flex-direction:column;gap:.35rem}
 .field label{font-size:.76rem;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.07em}
 .field input,.field select,.field textarea{background:#202b4a;border:1px solid var(--border);border-radius:4px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.88rem;padding:9px 11px;outline:none;transition:border-color .2s;width:100%}
@@ -103,27 +86,22 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);m
 .field textarea{resize:vertical;min-height:75px}
 .field select option{background:#1a2340}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:.9rem}
-
-/* ── EMPTY / TOAST ── */
 .empty{text-align:center;padding:2.5rem 1rem;color:var(--text2)}.empty .ei{font-size:2.2rem;margin-bottom:.6rem}.empty p{font-size:.85rem}
 .toast{position:fixed;bottom:1.5rem;right:1.5rem;z-index:999;background:var(--surface);border:1px solid var(--green);border-left:3px solid var(--green);border-radius:5px;padding:11px 16px;font-size:.86rem;transform:translateY(16px);opacity:0;transition:all .3s;pointer-events:none}
 .toast.show{transform:translateY(0);opacity:1}
 .toast.err{border-color:var(--red);border-left-color:var(--red)}
-
-/* ── CHANGE PASSWORD BOX ── */
 .pwd-box{background:rgba(201,168,76,.06);border:1px solid var(--border);border-radius:6px;padding:1.2rem 1.4rem;margin-bottom:1.5rem}
 .pwd-box h4{font-size:.9rem;font-weight:600;color:var(--gold);margin-bottom:.3rem}
 .pwd-box p{font-size:.8rem;color:var(--text2);margin-bottom:1rem}
 .pwd-row{display:flex;gap:.75rem;align-items:flex-end;flex-wrap:wrap}
 .pwd-row .field{flex:1;min-width:160px}
 .pwd-row .btn{white-space:nowrap;height:38px}
-
 @media(max-width:650px){.sidebar{display:none}.main{padding:1rem}.row2{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 
-<!-- ── ADMIN GATE ── -->
+<!-- ADMIN GATE -->
 <div id="gate">
   <div class="gate-card">
     <div class="gate-icon">🔐</div>
@@ -136,10 +114,10 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);m
   </div>
 </div>
 
-<!-- ── ADMIN DASHBOARD ── -->
+<!-- ADMIN DASHBOARD -->
 <div class="layout">
   <aside class="sidebar">
-    <div class="logo"><h2>EduSpace</h2><small>Admin Panel</small></div>
+    <div class="logo"><h2>SherigSpace</h2><small>Admin Panel</small></div>
     <nav class="sidenav">
       <div class="sitem on"  onclick="go('dash')">🏠 &nbsp;Dashboard</div>
       <div class="sitem"     onclick="go('lessons')">📚 &nbsp;Lessons</div>
@@ -156,52 +134,43 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);m
   </aside>
 
   <main class="main">
-
-    <!-- DASHBOARD -->
     <div class="page on" id="p-dash">
-      <div class="phead"><div><div class="ptitle">Dashboard</div><div class="psub">Overview of your EduSpace content</div></div></div>
+      <div class="phead"><div><div class="ptitle">Dashboard</div><div class="psub">Overview of your SherigSpace content</div></div></div>
       <div class="stats" id="d-stats"></div>
       <div class="card"><div class="card-head"><h3>Recent Lessons</h3><button class="btn btn-ghost btn-sm" onclick="go('lessons')">View All</button></div><div id="d-lessons"></div></div>
       <div class="card"><div class="card-head"><h3>Recent Videos</h3><button class="btn btn-ghost btn-sm" onclick="go('videos')">View All</button></div><div id="d-videos"></div></div>
     </div>
 
-    <!-- LESSONS -->
     <div class="page" id="p-lessons">
       <div class="phead"><div><div class="ptitle">Lessons</div><div class="psub">Add and manage your teaching lessons</div></div><button class="btn btn-gold" onclick="openForm('lesson')">+ Add Lesson</button></div>
       <div class="card"><div class="card-head"><h3>All Lessons</h3><span class="cbadge" id="c-lessons">0</span></div><div id="l-lessons"></div></div>
     </div>
 
-    <!-- RESOURCES -->
     <div class="page" id="p-resources">
       <div class="phead"><div><div class="ptitle">Resources</div><div class="psub">Manage downloadable files and guides</div></div><button class="btn btn-gold" onclick="openForm('resource')">+ Add Resource</button></div>
       <div class="card"><div class="card-head"><h3>All Resources</h3><span class="cbadge" id="c-resources">0</span></div><div id="l-resources"></div></div>
     </div>
 
-    <!-- VIDEOS -->
     <div class="page" id="p-videos">
       <div class="phead"><div><div class="ptitle">Videos</div><div class="psub">Manage your video lessons</div></div><button class="btn btn-gold" onclick="openForm('video')">+ Add Video</button></div>
       <div class="card"><div class="card-head"><h3>All Videos</h3><span class="cbadge" id="c-videos">0</span></div><div id="l-videos"></div></div>
     </div>
 
-    <!-- ARTICLES -->
     <div class="page" id="p-articles">
       <div class="phead"><div><div class="ptitle">Articles</div><div class="psub">Manage your blog posts</div></div><button class="btn btn-gold" onclick="openForm('article')">+ Add Article</button></div>
       <div class="card"><div class="card-head"><h3>All Articles</h3><span class="cbadge" id="c-articles">0</span></div><div id="l-articles"></div></div>
     </div>
 
-    <!-- USERS -->
     <div class="page" id="p-users">
       <div class="phead"><div><div class="ptitle">Users</div><div class="psub">People who have signed up to your site</div></div></div>
       <div class="card"><div class="card-head"><h3>All Users</h3><span class="cbadge" id="c-users">0</span></div><div id="l-users" style="overflow-x:auto;padding:.5rem 0"></div></div>
     </div>
 
-    <!-- SETTINGS -->
     <div class="page" id="p-settings">
       <div class="phead"><div><div class="ptitle">Settings</div><div class="psub">Manage your admin password and site info</div></div></div>
-
       <div class="pwd-box">
         <h4>🔑 Change Admin Password</h4>
-        <p>Update the password used to access this admin panel. Write it down somewhere safe!</p>
+        <p>Update the password used to access this admin panel.</p>
         <div class="pwd-row">
           <div class="field"><label>Current Password</label><input id="pwd-cur" type="password" placeholder="Current password"/></div>
           <div class="field"><label>New Password</label><input id="pwd-new" type="password" placeholder="New password (min 6 chars)"/></div>
@@ -210,18 +179,16 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);m
         </div>
         <div id="pwd-msg" style="font-size:.8rem;margin-top:.6rem;min-height:1rem"></div>
       </div>
-
       <div class="card">
         <div class="card-head"><h3>Site Information</h3></div>
         <div style="padding:1.4rem;display:flex;flex-direction:column;gap:1rem">
-          <div class="field"><label>Site Name</label><input id="s-sitename" placeholder="EduSpace"/></div>
+          <div class="field"><label>Site Name</label><input id="s-sitename" placeholder="SherigSpace"/></div>
           <div class="field"><label>Your Name / Tagline</label><input id="s-tagline" placeholder="e.g. Passionate Educator · Bhutan"/></div>
           <div class="field"><label>Contact Email</label><input id="s-email" type="email" placeholder="your@email.com"/></div>
           <button class="btn btn-gold" style="width:fit-content" onclick="saveSettings()">Save Settings</button>
         </div>
       </div>
     </div>
-
   </main>
 </div>
 
@@ -230,143 +197,142 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);m
   <div class="modal">
     <div class="mhead"><h3 id="m-title">Add</h3><button class="mclose" onclick="closeForm()">✕</button></div>
     <div class="mbody" id="m-body"></div>
-    <div class="mfoot"><button class="btn btn-ghost" onclick="closeForm()">Cancel</button><button class="btn btn-gold" onclick="saveItem()">Save</button></div>
+    <div class="mfoot">
+      <button class="btn btn-ghost" onclick="closeForm()">Cancel</button>
+      <button class="btn btn-gold" id="save-btn" onclick="saveItem()">Save</button>
+    </div>
   </div>
 </div>
 
 <div class="toast" id="toast"></div>
 
-<script>
-// ── ADMIN PASSWORD ──
+<script type="module">
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+
+const SUPABASE_URL = 'https://kgqlcjdjdhssactfezwi.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtncWxjamRqZGhzc2FjdGZlendpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk0NTE2MzQsImV4cCI6MjA5NTAyNzYzNH0.6hJpg9Zput8wnuDfq7wzb5dRC2KkuRmkmaz870U0Lto';
+const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+// ── ADMIN GATE ──
 const DEFAULT_PASS = 'admin1234';
 function getAdminPass(){ return localStorage.getItem('edu_adminpass')||DEFAULT_PASS; }
 
-function checkGate(){
+window.checkGate = function(){
   const v = document.getElementById('gate-input').value;
   if(v === getAdminPass()){
     sessionStorage.setItem('edu_admin_auth','1');
     document.getElementById('gate').classList.add('hide');
-    renderAll(); loadSettings();
+    renderAll();
+    loadSettings();
   } else {
     document.getElementById('gate-err').textContent = 'Incorrect password. Try again.';
-    document.getElementById('gate-input').value='';
+    document.getElementById('gate-input').value = '';
     setTimeout(()=>document.getElementById('gate-err').textContent='', 2500);
   }
-}
+};
 document.getElementById('gate-input').addEventListener('keydown', e=>{ if(e.key==='Enter') checkGate(); });
 
-function lockAdmin(){
+window.lockAdmin = function(){
   sessionStorage.removeItem('edu_admin_auth');
   location.reload();
-}
+};
 
-// Auto-unlock if already authenticated this session
 if(sessionStorage.getItem('edu_admin_auth')==='1'){
   document.getElementById('gate').classList.add('hide');
 }
 
-// ── DATA ──
-function DB_get(k){ try{ return JSON.parse(localStorage.getItem(k)||'[]') }catch{ return [] } }
-function DB_set(k,v){ localStorage.setItem(k,JSON.stringify(v)) }
 function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;') }
 
 // ── NAVIGATION ──
-function go(p){
+window.go = function(p){
   document.querySelectorAll('.page').forEach(e=>e.classList.remove('on'));
   document.querySelectorAll('.sitem').forEach(e=>e.classList.remove('on'));
   document.getElementById('p-'+p).classList.add('on');
   const map={dash:'dashboard',lessons:'lessons',resources:'resources',videos:'videos',articles:'articles',users:'users',settings:'settings'};
   document.querySelectorAll('.sitem').forEach(e=>{ if(e.textContent.trim().toLowerCase().includes(map[p]||p)) e.classList.add('on'); });
   renderAll();
-}
+};
 
-// ── RENDER ──
-function renderAll(){
-  const L=DB_get('edu_lessons'),R=DB_get('edu_resources'),V=DB_get('edu_videos'),A=DB_get('edu_articles'),U=DB_get('edu_users');
-  document.getElementById('d-stats').innerHTML=stat(L.length,'Lessons')+stat(R.length,'Resources')+stat(V.length,'Videos')+stat(U.length,'Users');
-  document.getElementById('c-lessons').textContent=L.length;
-  document.getElementById('c-resources').textContent=R.length;
-  document.getElementById('c-videos').textContent=V.length;
-  document.getElementById('c-articles').textContent=A.length;
-  document.getElementById('c-users').textContent=U.length;
-  document.getElementById('d-lessons').innerHTML=L.length?L.slice(-3).reverse().map(i=>row(i,'lesson')).join(''):empty('📚','No lessons yet');
-  document.getElementById('d-videos').innerHTML=V.length?V.slice(-3).reverse().map(i=>row(i,'video')).join(''):empty('🎥','No videos yet');
-  document.getElementById('l-lessons').innerHTML=L.length?L.map(i=>row(i,'lesson')).join(''):empty('📚','No lessons yet. Click + Add Lesson!');
-  document.getElementById('l-resources').innerHTML=R.length?R.map(i=>row(i,'resource')).join(''):empty('📁','No resources yet. Click + Add Resource!');
-  document.getElementById('l-videos').innerHTML=V.length?V.map(i=>row(i,'video')).join(''):empty('🎥','No videos yet. Click + Add Video!');
-  document.getElementById('l-articles').innerHTML=A.length?A.map(i=>row(i,'article')).join(''):empty('✍️','No articles yet. Click + Add Article!');
-  renderUsers(U);
+// ── RENDER ALL ──
+async function renderAll(){
+  const [
+    { data: L, count: lc },
+    { data: R, count: rc },
+    { data: V, count: vc },
+    { data: A, count: ac },
+    { data: U, count: uc }
+  ] = await Promise.all([
+    supabase.from('lessons').select('*',{count:'exact'}).order('created_at',{ascending:false}),
+    supabase.from('resources').select('*',{count:'exact'}).order('created_at',{ascending:false}),
+    supabase.from('videos').select('*',{count:'exact'}).order('created_at',{ascending:false}),
+    supabase.from('articles').select('*',{count:'exact'}).order('created_at',{ascending:false}),
+    supabase.from('profiles').select('*',{count:'exact'}).order('joined_at',{ascending:false})
+  ]);
+
+  document.getElementById('d-stats').innerHTML =
+    stat(lc||0,'Lessons')+stat(rc||0,'Resources')+stat(vc||0,'Videos')+stat(uc||0,'Members');
+  document.getElementById('c-lessons').textContent   = lc||0;
+  document.getElementById('c-resources').textContent = rc||0;
+  document.getElementById('c-videos').textContent    = vc||0;
+  document.getElementById('c-articles').textContent  = ac||0;
+  document.getElementById('c-users').textContent     = uc||0;
+
+  document.getElementById('d-lessons').innerHTML  = L?.length ? L.slice(0,3).map(i=>row(i,'lesson')).join('') : empty('📚','No lessons yet');
+  document.getElementById('d-videos').innerHTML   = V?.length ? V.slice(0,3).map(i=>row(i,'video')).join('')  : empty('🎥','No videos yet');
+  document.getElementById('l-lessons').innerHTML   = L?.length ? L.map(i=>row(i,'lesson')).join('')   : empty('📚','No lessons yet. Click + Add Lesson!');
+  document.getElementById('l-resources').innerHTML = R?.length ? R.map(i=>row(i,'resource')).join('') : empty('📁','No resources yet. Click + Add Resource!');
+  document.getElementById('l-videos').innerHTML    = V?.length ? V.map(i=>row(i,'video')).join('')    : empty('🎥','No videos yet. Click + Add Video!');
+  document.getElementById('l-articles').innerHTML  = A?.length ? A.map(i=>row(i,'article')).join('')  : empty('✍️','No articles yet. Click + Add Article!');
+  renderUsers(U||[]);
 }
 
 function renderUsers(U){
   if(!U.length){ document.getElementById('l-users').innerHTML=empty('👥','No users signed up yet.'); return; }
   document.getElementById('l-users').innerHTML=`<table class="utbl">
-    <thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Joined</th><th>Action</th></tr></thead>
+    <thead><tr><th>Name</th><th>Email</th><th>Class</th><th>Role</th><th>Joined</th></tr></thead>
     <tbody>${U.map(u=>`<tr>
       <td>${esc(u.name)}</td>
       <td>${esc(u.email)}</td>
+      <td>${esc(u.class_grade||'—')}</td>
       <td><span class="role-badge role-${u.role}">${u.role}</span></td>
-      <td>${new Date(u.joined).toLocaleDateString()}</td>
-      <td><button class="btn btn-del btn-sm" onclick="delUser('${u.id}')">Remove</button></td>
+      <td>${u.joined_at ? new Date(u.joined_at).toLocaleDateString() : '—'}</td>
     </tr>`).join('')}</tbody>
   </table>`;
 }
 
-function stat(n,l){return`<div class="sbox"><div class="n">${n}</div><div class="l">${l}</div></div>`}
-function empty(icon,msg){return`<div class="empty"><div class="ei">${icon}</div><p>${msg}</p></div>`}
+function stat(n,l){ return `<div class="sbox"><div class="n">${n}</div><div class="l">${l}</div></div>`; }
+function empty(icon,msg){ return `<div class="empty"><div class="ei">${icon}</div><p>${msg}</p></div>`; }
 function row(item,type){
-  const sub={lesson:`${item.subject||'—'} · ${item.level||'—'} · ${item.duration||'—'}`,resource:`${item.rtype||'—'} · ${item.size||'—'}`,video:`${item.subject||'—'} · ${item.duration||'—'}`,article:`${item.date||'—'} · ${item.category||'—'}`}[type]||'';
-  return`<div class="irow"><div><div class="iname">${esc(item.title||'Untitled')}</div><div class="imeta">${esc(sub)}</div></div><div class="ibtns"><button class="btn btn-edit btn-sm" onclick="openForm('${type}','${item.id}')">✏ Edit</button><button class="btn btn-del btn-sm" onclick="del('${type}','${item.id}')">✕</button></div></div>`;
-}
-
-// ── USERS ──
-function delUser(id){
-  if(!confirm('Remove this user?')) return;
-  DB_set('edu_users', DB_get('edu_users').filter(u=>u.id!==id));
-  toast('User removed.');renderAll();
-}
-
-// ── SETTINGS ──
-function loadSettings(){
-  const s=DB_get('edu_settings')[0]||{};
-  document.getElementById('s-sitename').value=s.sitename||'EduSpace';
-  document.getElementById('s-tagline').value=s.tagline||'';
-  document.getElementById('s-email').value=s.email||'';
-}
-function saveSettings(){
-  DB_set('edu_settings',[{sitename:document.getElementById('s-sitename').value,tagline:document.getElementById('s-tagline').value,email:document.getElementById('s-email').value}]);
-  toast('Settings saved! ✓');
-}
-function changePassword(){
-  const cur=document.getElementById('pwd-cur').value;
-  const nw=document.getElementById('pwd-new').value;
-  const cf=document.getElementById('pwd-confirm').value;
-  const msg=document.getElementById('pwd-msg');
-  if(cur!==getAdminPass()){msg.style.color='#f09090';msg.textContent='Current password is incorrect.';return;}
-  if(nw.length<6){msg.style.color='#f09090';msg.textContent='New password must be at least 6 characters.';return;}
-  if(nw!==cf){msg.style.color='#f09090';msg.textContent='Passwords do not match.';return;}
-  localStorage.setItem('edu_adminpass',nw);
-  msg.style.color='#7ed9b0';msg.textContent='Password changed successfully!';
-  document.getElementById('pwd-cur').value='';document.getElementById('pwd-new').value='';document.getElementById('pwd-confirm').value='';
-  setTimeout(()=>msg.textContent='',3000);
+  const sub={
+    lesson:`${item.subject||'—'} · ${item.level||'—'} · ${item.duration||'—'}`,
+    resource:`${item.rtype||'—'} · ${item.size||'—'}`,
+    video:`${item.subject||'—'} · ${item.duration||'—'}`,
+    article:`${item.date||'—'} · ${item.category||'—'}`
+  }[type]||'';
+  return `<div class="irow"><div><div class="iname">${esc(item.title||'Untitled')}</div><div class="imeta">${esc(sub)}</div></div><div class="ibtns"><button class="btn btn-edit btn-sm" onclick="openForm('${type}','${item.id}')">✏ Edit</button><button class="btn btn-del btn-sm" onclick="del('${type}','${item.id}')">✕</button></div></div>`;
 }
 
 // ── FORM ──
 const SUBJECTS=['Mathematics','Science','Language Arts','History','Technology','Social Studies','Arts','Physical Education','Other'];
 const LEVELS=['Beginner','Intermediate','Advanced'];
 const RTYPES=['PDF','DOCX','Image','Video Link','Spreadsheet','Presentation','Other'];
-let _type=null,_id=null;
+let _type=null, _id=null;
 
-function openForm(type,id=null){
-  _type=type;_id=id;
-  const item=id?(DB_get('edu_'+type+'s').find(i=>i.id===id)||{}): {};
-  document.getElementById('m-title').textContent=(id?'Edit ':'Add ')+{lesson:'Lesson',resource:'Resource',video:'Video',article:'Article'}[type];
-  document.getElementById('m-body').innerHTML=buildForm(type,item);
+window.openForm = async function(type, id=null){
+  _type=type; _id=id;
+  let item = {};
+  if(id){
+    const { data } = await supabase.from(type+'s').select('*').eq('id',id).single();
+    item = data || {};
+  }
+  document.getElementById('m-title').textContent = (id?'Edit ':'Add ')+{lesson:'Lesson',resource:'Resource',video:'Video',article:'Article'}[type];
+  document.getElementById('m-body').innerHTML = buildForm(type,item);
   document.getElementById('overlay').classList.add('open');
-}
-function closeForm(){document.getElementById('overlay').classList.remove('open');_type=null;_id=null;}
-function sel(opts,val){return opts.map(o=>`<option${o===val?' selected':''}>${o}</option>`).join('')}
-function fv(id){const e=document.getElementById(id);return e?e.value.trim():''}
+};
+
+window.closeForm = function(){ document.getElementById('overlay').classList.remove('open'); _type=null; _id=null; };
+function sel(opts,val){ return opts.map(o=>`<option${o===val?' selected':''}>${o}</option>`).join(''); }
+function fv(id){ const e=document.getElementById(id); return e?e.value.trim():''; }
 
 function buildForm(type,d={}){
   const v=k=>d[k]||'';
@@ -397,35 +363,96 @@ function buildForm(type,d={}){
     <div class="field"><label>Dzongkha Title (optional)</label><input id="f-dz" placeholder="རྩོམ་ཡིག་གི་མིང་" value="${esc(v('dz'))}"/></div>`;
 }
 
-function saveItem(){
-  const title=fv('f-title');
-  if(!title){toast('Please enter a title.',true);return;}
-  const key='edu_'+_type+'s';
-  const items=DB_get(key);
-  const base={id:_id||(Date.now().toString(36)+Math.random().toString(36).slice(2,5)),title,dz:fv('f-dz'),desc:fv('f-desc'),url:fv('f-url')};
-  const extra={lesson:{subject:fv('f-subject'),level:fv('f-level'),duration:fv('f-duration'),slides:fv('f-slides')},resource:{rtype:fv('f-rtype'),size:fv('f-size')},video:{subject:fv('f-subject'),duration:fv('f-duration')},article:{date:fv('f-date'),category:fv('f-category')}}[_type]||{};
-  const newItem={...base,...extra};
-  if(_id){const idx=items.findIndex(i=>i.id===_id);if(idx>-1)items[idx]=newItem;else items.push(newItem);toast('Updated! ✓');}
-  else{items.push(newItem);toast('Added! ✓');}
-  DB_set(key,items);closeForm();renderAll();
+window.saveItem = async function(){
+  const title = fv('f-title');
+  if(!title){ toast('Please enter a title.', true); return; }
+
+  const saveBtn = document.getElementById('save-btn');
+  saveBtn.disabled = true; saveBtn.textContent = 'Saving…';
+
+  const table = _type + 's';
+  const base = { title, dz: fv('f-dz'), desc: fv('f-desc'), url: fv('f-url') };
+  const extra = {
+    lesson:   { subject: fv('f-subject'), level: fv('f-level'), duration: fv('f-duration'), slides: fv('f-slides') },
+    resource: { rtype: fv('f-rtype'), size: fv('f-size') },
+    video:    { subject: fv('f-subject'), duration: fv('f-duration') },
+    article:  { date: fv('f-date'), category: fv('f-category') }
+  }[_type] || {};
+
+  const newItem = { ...base, ...extra };
+
+  let error;
+  if(_id){
+    ({ error } = await supabase.from(table).update(newItem).eq('id', _id));
+    if(!error) toast('Updated! ✓');
+  } else {
+    newItem.id = Date.now().toString(36) + Math.random().toString(36).slice(2,5);
+    ({ error } = await supabase.from(table).insert(newItem));
+    if(!error) toast('Added! ✓');
+  }
+
+  if(error){ toast('Error: ' + error.message, true); }
+  else { closeForm(); renderAll(); }
+
+  saveBtn.disabled = false; saveBtn.textContent = 'Save';
+};
+
+window.del = async function(type, id){
+  if(!confirm('Delete this item?')) return;
+  const { error } = await supabase.from(type+'s').delete().eq('id', id);
+  if(error){ toast('Error: ' + error.message, true); return; }
+  toast('Deleted.');
+  renderAll();
+};
+
+function toast(msg, isErr=false){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast' + (isErr?' err':'');
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 3000);
 }
 
-function del(type,id){
-  if(!confirm('Delete this item?'))return;
-  DB_set('edu_'+type+'s',DB_get('edu_'+type+'s').filter(i=>i.id!==id));
-  toast('Deleted.');renderAll();
+document.getElementById('overlay').addEventListener('click', e=>{ if(e.target===document.getElementById('overlay')) closeForm(); });
+
+// ── SETTINGS ──
+window.loadSettings = function(){
+  const s = JSON.parse(localStorage.getItem('edu_settings')||'{}');
+  document.getElementById('s-sitename').value = s.sitename||'SherigSpace';
+  document.getElementById('s-tagline').value  = s.tagline||'';
+  document.getElementById('s-email').value    = s.email||'';
+};
+
+window.saveSettings = function(){
+  localStorage.setItem('edu_settings', JSON.stringify({
+    sitename: document.getElementById('s-sitename').value,
+    tagline:  document.getElementById('s-tagline').value,
+    email:    document.getElementById('s-email').value
+  }));
+  toast('Settings saved! ✓');
+};
+
+window.changePassword = function(){
+  const cur = document.getElementById('pwd-cur').value;
+  const nw  = document.getElementById('pwd-new').value;
+  const cf  = document.getElementById('pwd-confirm').value;
+  const msg = document.getElementById('pwd-msg');
+  if(cur !== getAdminPass()){ msg.style.color='#f09090'; msg.textContent='Current password is incorrect.'; return; }
+  if(nw.length < 6){ msg.style.color='#f09090'; msg.textContent='New password must be at least 6 characters.'; return; }
+  if(nw !== cf){ msg.style.color='#f09090'; msg.textContent='Passwords do not match.'; return; }
+  localStorage.setItem('edu_adminpass', nw);
+  msg.style.color='#7ed9b0'; msg.textContent='Password changed successfully!';
+  document.getElementById('pwd-cur').value='';
+  document.getElementById('pwd-new').value='';
+  document.getElementById('pwd-confirm').value='';
+  setTimeout(()=>msg.textContent='', 3000);
+};
+
+// ── INIT ──
+if(sessionStorage.getItem('edu_admin_auth')==='1'){
+  renderAll();
+  loadSettings();
 }
-
-function toast(msg,isErr=false){
-  const t=document.getElementById('toast');
-  t.textContent=msg;t.className='toast'+(isErr?' err':'');t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),3000);
-}
-
-document.getElementById('overlay').addEventListener('click',e=>{if(e.target===document.getElementById('overlay'))closeForm();});
-
-// Init
-if(sessionStorage.getItem('edu_admin_auth')==='1'){renderAll();loadSettings();}
 </script>
 </body>
 </html>
