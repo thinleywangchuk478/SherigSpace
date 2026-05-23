@@ -7,7 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--gold:#c9a84c;--gold-light:#e8c97a;--navy:#0779a3;--navy2:#1a2340;--navy3:#0a4567;--surface:#192035;--border:rgba(201,168,76,0.2);--text:#e8e4dc;--text2:#9aa3b8;--red:#e05c5c;--green:#4caf84}
+:root{--gold:#c9a84c;--gold-light:#e8c97a;--navy:#0779a3;--navy2:#1a2340;--surface:#192035;--border:rgba(201,168,76,0.2);--text:#e8e4dc;--text2:#9aa3b8;--red:#e05c5c;--green:#4caf84}
 body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);min-height:100vh;display:flex;flex-direction:column}
 .bg{position:fixed;inset:0;z-index:0;background:linear-gradient(135deg,#0f1623 0%,#1a2340 60%,#1a2f50 100%)}
 .bg::before{content:'';position:absolute;top:-100px;right:-100px;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(201,168,76,.08) 0%,transparent 70%)}
@@ -31,7 +31,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);m
 .field select option{background:#1a2340}
 .btn{width:100%;padding:12px;background:var(--gold);color:var(--navy2);border:none;border-radius:5px;font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:700;cursor:pointer;transition:background .2s,transform .15s;margin-top:.3rem}
 .btn:hover{background:var(--gold-light);transform:translateY(-1px)}
-.btn:active{transform:translateY(0)}
 .btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
 .msg{font-size:.82rem;padding:10px 13px;border-radius:5px;display:none}
 .msg.err{background:rgba(224,92,92,.12);border:1px solid rgba(224,92,92,.3);color:#f09090;display:block}
@@ -64,12 +63,11 @@ footer span{color:var(--gold)}
 
   <div class="card">
     <div class="tabs">
-      <div class="tab on" onclick="switchTab('login')">Log In</div>
-      <div class="tab" onclick="switchTab('signup')">Sign Up</div>
+      <div class="tab on" id="tab-login">Log In</div>
+      <div class="tab" id="tab-signup">Sign Up</div>
     </div>
 
     <div class="forms">
-
       <!-- LOGIN -->
       <div class="form on" id="f-login">
         <div id="login-msg" class="msg"></div>
@@ -82,10 +80,10 @@ footer span{color:var(--gold)}
           <input id="l-pass" type="password" placeholder="Your password"/>
         </div>
         <p class="hint" style="text-align:right;margin-top:-8px;">
-          <a onclick="openForgotPassword()">Forgot Password?</a>
+          <a id="forgot-link">Forgot Password?</a>
         </p>
-        <button class="btn" id="login-btn" onclick="doLogin()">Log In</button>
-        <p class="hint">Don't have an account? <a onclick="switchTab('signup')">Sign up here</a></p>
+        <button class="btn" id="login-btn">Log In</button>
+        <p class="hint">Don't have an account? <a id="go-signup">Sign up here</a></p>
       </div>
 
       <!-- SIGNUP -->
@@ -112,17 +110,16 @@ footer span{color:var(--gold)}
         </div>
         <div class="field">
           <label>Password</label>
-          <input id="s-pass" type="password" placeholder="Min. 6 characters" oninput="checkStrength(this.value)"/>
+          <input id="s-pass" type="password" placeholder="Min. 6 characters"/>
           <div class="strength"><div class="strength-bar" id="sbar"></div></div>
         </div>
         <div class="field">
           <label>Confirm Password</label>
           <input id="s-pass2" type="password" placeholder="Repeat password"/>
         </div>
-        <button class="btn" id="signup-btn" onclick="doSignup()">Create Account</button>
-        <p class="hint">Already have an account? <a onclick="switchTab('login')">Log in here</a></p>
+        <button class="btn" id="signup-btn">Create Account</button>
+        <p class="hint">Already have an account? <a id="go-login">Log in here</a></p>
       </div>
-
     </div>
   </div>
 </div>
@@ -138,8 +135,8 @@ footer span{color:var(--gold)}
       <input id="fp-email" type="email" placeholder="you@example.com"/>
     </div>
     <div class="modal-actions">
-      <button class="btn" onclick="resetPassword()">Send Reset Link</button>
-      <button class="btn cancel-btn" onclick="closeForgotPassword()">Cancel</button>
+      <button class="btn" id="reset-btn">Send Reset Link</button>
+      <button class="btn cancel-btn" id="cancel-btn">Cancel</button>
     </div>
   </div>
 </div>
@@ -149,39 +146,38 @@ footer span{color:var(--gold)}
 <script type="module">
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
 
-// ── PASTE YOUR SUPABASE CREDENTIALS HERE ──
 const SUPABASE_URL = 'https://kgqlcjdjdhssactfezwi.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtncWxjamRqZGhzc2FjdGZlendpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk0NTE2MzQsImV4cCI6MjA5NTAyNzYzNH0.6hJpg9Zput8wnuDfq7wzb5dRC2KkuRmkmaz870U0Lto';
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
 // ── HELPERS ──
-function showMsg(id, msg, type){
+function showMsg(id, msg, type) {
   const el = document.getElementById(id);
   el.textContent = msg;
   el.className = 'msg ' + type;
 }
 
-function setLoading(btnId, loading, label=''){
+function setLoading(btnId, loading, label) {
   const btn = document.getElementById(btnId);
   btn.disabled = loading;
-  if(label) btn.textContent = loading ? '...' : label;
+  btn.textContent = loading ? 'Please wait…' : label;
 }
 
 // ── TAB SWITCH ──
-window.switchTab = function(t){
-  document.querySelectorAll('.tab').forEach((el,i) =>
-    el.classList.toggle('on', (t==='login'&&i===0)||(t==='signup'&&i===1))
-  );
-  document.getElementById('f-login').classList.toggle('on', t==='login');
-  document.getElementById('f-signup').classList.toggle('on', t==='signup');
-};
+function switchTab(t) {
+  document.getElementById('tab-login').classList.toggle('on', t === 'login');
+  document.getElementById('tab-signup').classList.toggle('on', t === 'signup');
+  document.getElementById('f-login').classList.toggle('on', t === 'login');
+  document.getElementById('f-signup').classList.toggle('on', t === 'signup');
+}
 
 // ── PASSWORD STRENGTH ──
-window.checkStrength = function(v){
+document.getElementById('s-pass').addEventListener('input', function() {
+  const v = this.value;
   const bar = document.getElementById('sbar');
   let score = 0;
-  if(v.length>=6) score++;
-  if(v.length>=10) score++;
+  if(v.length >= 6)  score++;
+  if(v.length >= 10) score++;
   if(/[A-Z]/.test(v)) score++;
   if(/[0-9]/.test(v)) score++;
   if(/[^A-Za-z0-9]/.test(v)) score++;
@@ -189,38 +185,35 @@ window.checkStrength = function(v){
   const col = ['#e05c5c','#e05c5c','#e8a84c','#c9a84c','#4caf84','#4caf84'][score];
   bar.style.width = pct + '%';
   bar.style.background = col;
-};
+});
 
 // ── SIGN UP ──
-window.doSignup = async function(){
+async function doSignup() {
   const name       = document.getElementById('s-name').value.trim();
   const email      = document.getElementById('s-email').value.trim().toLowerCase();
   const classGrade = document.getElementById('s-class').value;
   const pass       = document.getElementById('s-pass').value;
   const pass2      = document.getElementById('s-pass2').value;
 
-  if(!name){ showMsg('signup-msg','Please enter your full name.','err'); return; }
-  if(!classGrade){ showMsg('signup-msg','Please select your class/grade.','err'); return; }
-  if(pass.length < 6){ showMsg('signup-msg','Password must be at least 6 characters.','err'); return; }
-  if(pass !== pass2){ showMsg('signup-msg','Passwords do not match.','err'); return; }
+  if(!name)       { showMsg('signup-msg', 'Please enter your full name.', 'err'); return; }
+  if(!classGrade) { showMsg('signup-msg', 'Please select your class/grade.', 'err'); return; }
+  if(pass.length < 6) { showMsg('signup-msg', 'Password must be at least 6 characters.', 'err'); return; }
+  if(pass !== pass2)  { showMsg('signup-msg', 'Passwords do not match.', 'err'); return; }
 
   setLoading('signup-btn', true, 'Create Account');
-  showMsg('signup-msg','','');
+  showMsg('signup-msg', '', '');
 
   try {
-    // 1. Create auth user
     const { data, error } = await supabase.auth.signUp({ email, password: pass });
     if(error) throw error;
 
-    // data.user can be null if email confirmation is still on in Supabase
     const uid = data.user?.id || data.session?.user?.id;
-    if(!uid){
+    if(!uid) {
       showMsg('signup-msg', '✅ Check your email to confirm your account, then log in.', 'ok');
       setLoading('signup-btn', false, 'Create Account');
       return;
     }
 
-    // 2. Save profile to profiles table
     const { error: profileErr } = await supabase.from('profiles').upsert({
       id: uid,
       name,
@@ -238,34 +231,29 @@ window.doSignup = async function(){
   } finally {
     setLoading('signup-btn', false, 'Create Account');
   }
-};
+}
 
 // ── LOGIN ──
-window.doLogin = async function(){
+async function doLogin() {
   const email = document.getElementById('l-email').value.trim().toLowerCase();
   const pass  = document.getElementById('l-pass').value;
 
-  if(!email || !pass){ showMsg('login-msg','Please enter your email and password.','err'); return; }
+  if(!email || !pass) { showMsg('login-msg', 'Please enter your email and password.', 'err'); return; }
 
   setLoading('login-btn', true, 'Log In');
-  showMsg('login-msg','','');
+  showMsg('login-msg', '', '');
 
   try {
     const { data, error } = await supabase.auth.signInWithPassword({ email, password: pass });
     if(error) throw error;
 
-    // Fetch profile
     const { data: profile } = await supabase
-      .from('profiles')
-      .select('*')
-      .eq('id', data.user.id)
-      .single();
+      .from('profiles').select('*').eq('id', data.user.id).single();
 
-    // Store session info for UI use
     localStorage.setItem('edu_session', JSON.stringify({
       id: data.user.id,
       name: profile?.name || email,
-      email: email,
+      email,
       role: profile?.role || 'user',
       class_grade: profile?.class_grade || ''
     }));
@@ -277,30 +265,47 @@ window.doLogin = async function(){
   } finally {
     setLoading('login-btn', false, 'Log In');
   }
-};
+}
 
 // ── FORGOT PASSWORD ──
-window.openForgotPassword  = () => document.getElementById('forgotModal').classList.add('show');
-window.closeForgotPassword = () => {
+function openForgotPassword() {
+  document.getElementById('forgotModal').classList.add('show');
+}
+
+function closeForgotPassword() {
   document.getElementById('forgotModal').classList.remove('show');
   document.getElementById('forgot-msg').className = 'msg';
-};
+}
 
-window.resetPassword = async function(){
+async function resetPassword() {
   const email = document.getElementById('fp-email').value.trim().toLowerCase();
-  if(!email){ showMsg('forgot-msg','Please enter your email.','err'); return; }
-
+  if(!email) { showMsg('forgot-msg', 'Please enter your email.', 'err'); return; }
   try {
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
       redirectTo: window.location.origin + '/login.html'
     });
     if(error) throw error;
-    showMsg('forgot-msg','✅ Reset link sent! Check your email.','ok');
+    showMsg('forgot-msg', '✅ Reset link sent! Check your email.', 'ok');
     setTimeout(closeForgotPassword, 2500);
   } catch(err) {
-    showMsg('forgot-msg','❌ ' + (err.message || 'Failed to send reset link.'),'err');
+    showMsg('forgot-msg', '❌ ' + (err.message || 'Failed to send reset link.'), 'err');
   }
-};
+}
+
+// ── EVENT LISTENERS ──
+document.getElementById('tab-login').addEventListener('click',  () => switchTab('login'));
+document.getElementById('tab-signup').addEventListener('click', () => switchTab('signup'));
+document.getElementById('go-signup').addEventListener('click',  () => switchTab('signup'));
+document.getElementById('go-login').addEventListener('click',   () => switchTab('login'));
+document.getElementById('login-btn').addEventListener('click',  doLogin);
+document.getElementById('signup-btn').addEventListener('click', doSignup);
+document.getElementById('forgot-link').addEventListener('click', openForgotPassword);
+document.getElementById('reset-btn').addEventListener('click',  resetPassword);
+document.getElementById('cancel-btn').addEventListener('click', closeForgotPassword);
+
+// Enter key support
+document.getElementById('l-pass').addEventListener('keydown',  e => { if(e.key === 'Enter') doLogin(); });
+document.getElementById('s-pass2').addEventListener('keydown', e => { if(e.key === 'Enter') doSignup(); });
 
 // ── AUTO REDIRECT IF ALREADY LOGGED IN ──
 (async () => {
