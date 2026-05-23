@@ -124,6 +124,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);m
       <div class="sitem"     onclick="go('resources')">📁 &nbsp;Resources</div>
       <div class="sitem"     onclick="go('videos')">🎥 &nbsp;Videos</div>
       <div class="sitem"     onclick="go('articles')">✍️ &nbsp;Articles</div>
+      <div class="sitem"     onclick="go('announce')">📢 &nbsp;Announcements</div>
       <div class="sitem"     onclick="go('users')">👥 &nbsp;Users</div>
       <div class="sitem"     onclick="go('settings')">⚙️ &nbsp;Settings</div>
     </nav>
@@ -159,6 +160,11 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);m
     <div class="page" id="p-articles">
       <div class="phead"><div><div class="ptitle">Articles</div><div class="psub">Manage your blog posts</div></div><button class="btn btn-gold" onclick="openForm('article')">+ Add Article</button></div>
       <div class="card"><div class="card-head"><h3>All Articles</h3><span class="cbadge" id="c-articles">0</span></div><div id="l-articles"></div></div>
+    </div>
+
+    <div class="page" id="p-announce">
+      <div class="phead"><div><div class="ptitle">Announcements</div><div class="psub">Post a banner announcement shown at the top of your site</div></div><button class="btn btn-gold" onclick="openForm('announce')">+ New Announcement</button></div>
+      <div class="card"><div class="card-head"><h3>All Announcements</h3><span class="cbadge" id="c-announce">0</span></div><div id="l-announce"></div></div>
     </div>
 
     <div class="page" id="p-users">
@@ -260,13 +266,15 @@ async function renderAll(){
     { data: R, count: rc },
     { data: V, count: vc },
     { data: A, count: ac },
-    { data: U, count: uc }
+    { data: U, count: uc },
+    { data: AN, count: anc }
   ] = await Promise.all([
     supabase.from('lessons').select('*',{count:'exact'}).order('created_at',{ascending:false}),
     supabase.from('resources').select('*',{count:'exact'}).order('created_at',{ascending:false}),
     supabase.from('videos').select('*',{count:'exact'}).order('created_at',{ascending:false}),
     supabase.from('articles').select('*',{count:'exact'}).order('created_at',{ascending:false}),
-    supabase.from('profiles').select('*',{count:'exact'}).order('joined_at',{ascending:false})
+    supabase.from('profiles').select('*',{count:'exact'}).order('joined_at',{ascending:false}),
+    supabase.from('announcements').select('*',{count:'exact'}).order('created_at',{ascending:false})
   ]);
 
   document.getElementById('d-stats').innerHTML =
@@ -275,6 +283,7 @@ async function renderAll(){
   document.getElementById('c-resources').textContent = rc||0;
   document.getElementById('c-videos').textContent    = vc||0;
   document.getElementById('c-articles').textContent  = ac||0;
+  document.getElementById('c-announce').textContent  = anc||0;
   document.getElementById('c-users').textContent     = uc||0;
 
   document.getElementById('d-lessons').innerHTML  = L?.length ? L.slice(0,3).map(i=>row(i,'lesson')).join('') : empty('📚','No lessons yet');
@@ -283,6 +292,9 @@ async function renderAll(){
   document.getElementById('l-resources').innerHTML = R?.length ? R.map(i=>row(i,'resource')).join('') : empty('📁','No resources yet. Click + Add Resource!');
   document.getElementById('l-videos').innerHTML    = V?.length ? V.map(i=>row(i,'video')).join('')    : empty('🎥','No videos yet. Click + Add Video!');
   document.getElementById('l-articles').innerHTML  = A?.length ? A.map(i=>row(i,'article')).join('')  : empty('✍️','No articles yet. Click + Add Article!');
+  document.getElementById('l-announce').innerHTML  = AN?.length
+    ? AN.map(a=>`<div class="irow"><div><div class="iname">${esc(a.emoji||'📢')} ${esc(a.message||'')}</div><div class="imeta">${a.active?'✅ Active':'❌ Hidden'}${a.link_label?' · '+esc(a.link_label):''}</div></div><div class="ibtns"><button class="btn btn-edit btn-sm" onclick="openForm('announce','${a.id}')">✏ Edit</button><button class="btn btn-del btn-sm" onclick="del('announce','${a.id}')">✕</button></div></div>`).join('')
+    : empty('📢','No announcements yet. Click + New Announcement!');
   renderUsers(U||[]);
 }
 
@@ -355,6 +367,16 @@ function buildForm(type,d={}){
     <div class="row2"><div class="field"><label>Subject</label><select id="f-subject"><option value="">-- Select --</option>${sel(SUBJECTS,v('subject'))}</select></div><div class="field"><label>Duration</label><input id="f-duration" placeholder="e.g. 12:30" value="${esc(v('duration'))}"/></div></div>
     <div class="field"><label>Description</label><textarea id="f-desc" placeholder="What will students learn?">${esc(v('desc'))}</textarea></div>
     <div class="field"><label>Dzongkha Title (optional)</label><input id="f-dz" placeholder="བརྙན་ཐམས་ཀྱི་མིང་" value="${esc(v('dz'))}"/></div>`;
+  if(type==='announce') return`
+    <div class="field"><label>Message *</label><textarea id="f-message" placeholder="e.g. 🎉 New lessons added! Check out Class 6 Mathematics." style="min-height:90px">${esc(v('message'))}</textarea></div>
+    <div class="row2">
+      <div class="field"><label>Emoji (optional)</label><input id="f-emoji" placeholder="e.g. 📢 🎉 🆕" value="${esc(v('emoji'))}"/></div>
+      <div class="field"><label>Active?</label><select id="f-active"><option value="true"${v('active')!=='false'?' selected':''}>✅ Yes — show on site</option><option value="false"${v('active')==='false'?' selected':''}>❌ No — hide</option></select></div>
+    </div>
+    <div class="row2">
+      <div class="field"><label>Link Label (optional)</label><input id="f-link_label" placeholder="e.g. View Lessons" value="${esc(v('link_label'))}"/></div>
+      <div class="field"><label>Link URL (optional)</label><input id="f-link_url" placeholder="https://..." value="${esc(v('link_url'))}"/></div>
+    </div>`;
   if(type==='article') return`
     <div class="field"><label>Article Title *</label><input id="f-title" placeholder="e.g. 5 Ways to Make Math Engaging" value="${esc(v('title'))}"/></div>
     <div class="row2"><div class="field"><label>Date</label><input id="f-date" type="date" value="${esc(v('date'))}"/></div><div class="field"><label>Category</label><input id="f-category" placeholder="e.g. Pedagogy" value="${esc(v('category'))}"/></div></div>
@@ -370,13 +392,18 @@ window.saveItem = async function(){
   const saveBtn = document.getElementById('save-btn');
   saveBtn.disabled = true; saveBtn.textContent = 'Saving…';
 
-  const table = _type + 's';
-  const base = { title, dz: fv('f-dz'), desc: fv('f-desc'), url: fv('f-url') };
+  const table = _type === 'announce' ? 'announcements' : _type + 's';
+  // Announcements use 'message' not 'title'
+  const isAnnounce = _type === 'announce';
+  const base = isAnnounce
+    ? { message: fv('f-message') }
+    : { title, dz: fv('f-dz'), desc: fv('f-desc'), url: fv('f-url') };
   const extra = {
     lesson:   { subject: fv('f-subject'), level: fv('f-level'), duration: fv('f-duration'), slides: fv('f-slides') },
     resource: { rtype: fv('f-rtype'), size: fv('f-size') },
     video:    { subject: fv('f-subject'), duration: fv('f-duration') },
-    article:  { date: fv('f-date'), category: fv('f-category') }
+    article:  { date: fv('f-date'), category: fv('f-category') },
+    announce: { emoji: fv('f-emoji'), active: fv('f-active') === 'true', link_label: fv('f-link_label'), link_url: fv('f-link_url') }
   }[_type] || {};
 
   const newItem = { ...base, ...extra };
@@ -399,7 +426,8 @@ window.saveItem = async function(){
 
 window.del = async function(type, id){
   if(!confirm('Delete this item?')) return;
-  const { error } = await supabase.from(type+'s').delete().eq('id', id);
+  const tbl = type === 'announce' ? 'announcements' : type+'s';
+  const { error } = await supabase.from(tbl).delete().eq('id', id);
   if(error){ toast('Error: ' + error.message, true); return; }
   toast('Deleted.');
   renderAll();
