@@ -299,7 +299,7 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 // ── STRIPE ──
 // 👇 Paste your Stripe publishable key here after creating your Stripe account
 const STRIPE_PUB_KEY = 'pk_test_YOUR_PUBLISHABLE_KEY';
-// 👇 Paste your Stripe Price ID here (from Stripe → Products → your $2/month plan)
+// 👇 Paste your Stripe Price ID here (from Stripe → Products → your $1.5/month plan)
 const STRIPE_PRICE_ID = 'price_YOUR_PRICE_ID';
 
 // ── FREE CONTENT LIMITS ──
@@ -339,7 +339,7 @@ window.startSubscribe = async function(){
     else throw new Error(data.error || 'Could not create checkout');
   } catch(err) {
     alert('Payment setup failed: ' + err.message);
-    if(btn){ btn.textContent='Subscribe $2/month'; btn.disabled=false; }
+    if(btn){ btn.textContent='Subscribe $1.5/month'; btn.disabled=false; }
   }
 };
 
@@ -415,7 +415,7 @@ window.openProfile = async function(){
   const { data: profile } = await supabase.from('profiles').select('*').eq('id', s.id).single();
   const subStatus = isSubscriber()
     ? `<div style="text-align:center;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);border-radius:6px;padding:.6rem;margin-bottom:1rem;color:#c9a84c;font-weight:600;font-size:.85rem">⭐ Premium Subscriber</div>`
-    : `<button onclick="startSubscribe()" style="width:100%;padding:10px;background:#c9a84c;border:none;border-radius:4px;color:#1a2340;font-family:'DM Sans',sans-serif;font-size:.88rem;font-weight:700;cursor:pointer;margin-bottom:.75rem">⭐ Upgrade to Premium — $2/month</button>`;
+    : `<button onclick="startSubscribe()" style="width:100%;padding:10px;background:#c9a84c;border:none;border-radius:4px;color:#1a2340;font-family:'DM Sans',sans-serif;font-size:.88rem;font-weight:700;cursor:pointer;margin-bottom:.75rem">⭐ Upgrade to Premium — $1.5/month</button>`;
   document.getElementById('profile-body').innerHTML=`
     <div class="profile-avatar">${s.name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase()}</div>
     <div class="profile-name">${s.name}</div>
