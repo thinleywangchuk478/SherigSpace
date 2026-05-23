@@ -317,9 +317,9 @@ function empty(icon,msg){ return `<div class="empty"><div class="ei">${icon}</di
 function row(item,type){
   const sub={
     lesson:`${item.subject||'—'} · ${item.level||'—'} · ${item.duration||'—'}`,
-    resource:`${item.rtype||'—'} · ${item.size||'—'}`,
+    resource:`${item.rtype||'—'} · ${item.filesize||'—'}`,
     video:`${item.subject||'—'} · ${item.duration||'—'}`,
-    article:`${item.date||'—'} · ${item.category||'—'}`
+    article:`${item.article_date||'—'} · ${item.category||'—'}`
   }[type]||'';
   return `<div class="irow"><div><div class="iname">${esc(item.title||'Untitled')}</div><div class="imeta">${esc(sub)}</div></div><div class="ibtns"><button class="btn btn-edit btn-sm" onclick="openForm('${type}','${item.id}')">✏ Edit</button><button class="btn btn-del btn-sm" onclick="del('${type}','${item.id}')">✕</button></div></div>`;
 }
@@ -352,20 +352,20 @@ function buildForm(type,d={}){
     <div class="field"><label>Lesson Title *</label><input id="f-title" placeholder="e.g. Introduction to Algebra" value="${esc(v('title'))}"/></div>
     <div class="row2"><div class="field"><label>Subject</label><select id="f-subject"><option value="">-- Select --</option>${sel(SUBJECTS,v('subject'))}</select></div><div class="field"><label>Level</label><select id="f-level"><option value="">-- Select --</option>${sel(LEVELS,v('level'))}</select></div></div>
     <div class="row2"><div class="field"><label>Duration</label><input id="f-duration" placeholder="e.g. 45 min" value="${esc(v('duration'))}"/></div><div class="field"><label>Slides / Pages</label><input id="f-slides" placeholder="e.g. 12 slides" value="${esc(v('slides'))}"/></div></div>
-    <div class="field"><label>Description</label><textarea id="f-desc" placeholder="What will students learn?">${esc(v('desc'))}</textarea></div>
+    <div class="field"><label>Description</label><textarea id="f-description" placeholder="What will students learn?">${esc(v('description'))}</textarea></div>
     <div class="field"><label>File or Link URL</label><input id="f-url" placeholder="https://..." value="${esc(v('url'))}"/></div>
     <div class="field"><label>Dzongkha Title (optional)</label><input id="f-dz" placeholder="སློབ་ཚན་གྱི་མིང་" value="${esc(v('dz'))}"/></div>`;
   if(type==='resource') return`
     <div class="field"><label>Resource Title *</label><input id="f-title" placeholder="e.g. Algebra Worksheet Pack" value="${esc(v('title'))}"/></div>
-    <div class="row2"><div class="field"><label>File Type</label><select id="f-rtype"><option value="">-- Select --</option>${sel(RTYPES,v('rtype'))}</select></div><div class="field"><label>File Size</label><input id="f-size" placeholder="e.g. 2.4 MB" value="${esc(v('size'))}"/></div></div>
-    <div class="field"><label>Description</label><textarea id="f-desc" placeholder="What does this contain?">${esc(v('desc'))}</textarea></div>
+    <div class="row2"><div class="field"><label>File Type</label><select id="f-rtype"><option value="">-- Select --</option>${sel(RTYPES,v('rtype'))}</select></div><div class="field"><label>File Size</label><input id="f-filesize" placeholder="e.g. 2.4 MB" value="${esc(v('filesize'))}"/></div></div>
+    <div class="field"><label>Description</label><textarea id="f-description" placeholder="What does this contain?">${esc(v('description'))}</textarea></div>
     <div class="field"><label>Download / Link URL</label><input id="f-url" placeholder="https://..." value="${esc(v('url'))}"/></div>
     <div class="field"><label>Dzongkha Title (optional)</label><input id="f-dz" placeholder="ཡིག་ཆའི་མིང་" value="${esc(v('dz'))}"/></div>`;
   if(type==='video') return`
     <div class="field"><label>Video Title *</label><input id="f-title" placeholder="e.g. Coding Basics Part 1" value="${esc(v('title'))}"/></div>
     <div class="field"><label>YouTube / Video URL *</label><input id="f-url" placeholder="https://youtube.com/watch?v=..." value="${esc(v('url'))}"/></div>
     <div class="row2"><div class="field"><label>Subject</label><select id="f-subject"><option value="">-- Select --</option>${sel(SUBJECTS,v('subject'))}</select></div><div class="field"><label>Duration</label><input id="f-duration" placeholder="e.g. 12:30" value="${esc(v('duration'))}"/></div></div>
-    <div class="field"><label>Description</label><textarea id="f-desc" placeholder="What will students learn?">${esc(v('desc'))}</textarea></div>
+    <div class="field"><label>Description</label><textarea id="f-description" placeholder="What will students learn?">${esc(v('description'))}</textarea></div>
     <div class="field"><label>Dzongkha Title (optional)</label><input id="f-dz" placeholder="བརྙན་ཐམས་ཀྱི་མིང་" value="${esc(v('dz'))}"/></div>`;
   if(type==='announce') return`
     <div class="field"><label>Message *</label><textarea id="f-message" placeholder="e.g. 🎉 New lessons added! Check out Class 6 Mathematics." style="min-height:90px">${esc(v('message'))}</textarea></div>
@@ -379,8 +379,8 @@ function buildForm(type,d={}){
     </div>`;
   if(type==='article') return`
     <div class="field"><label>Article Title *</label><input id="f-title" placeholder="e.g. 5 Ways to Make Math Engaging" value="${esc(v('title'))}"/></div>
-    <div class="row2"><div class="field"><label>Date</label><input id="f-date" type="date" value="${esc(v('date'))}"/></div><div class="field"><label>Category</label><input id="f-category" placeholder="e.g. Pedagogy" value="${esc(v('category'))}"/></div></div>
-    <div class="field"><label>Summary</label><textarea id="f-desc" placeholder="Short summary...">${esc(v('desc'))}</textarea></div>
+    <div class="row2"><div class="field"><label>Date</label><input id="f-article_date" type="date" value="${esc(v('article_date'))}"/></div><div class="field"><label>Category</label><input id="f-category" placeholder="e.g. Pedagogy" value="${esc(v('category'))}"/></div></div>
+    <div class="field"><label>Summary</label><textarea id="f-description" placeholder="Short summary...">${esc(v('description'))}</textarea></div>
     <div class="field"><label>Article Link URL</label><input id="f-url" placeholder="https://..." value="${esc(v('url'))}"/></div>
     <div class="field"><label>Dzongkha Title (optional)</label><input id="f-dz" placeholder="རྩོམ་ཡིག་གི་མིང་" value="${esc(v('dz'))}"/></div>`;
 }
@@ -397,12 +397,12 @@ window.saveItem = async function(){
   const isAnnounce = _type === 'announce';
   const base = isAnnounce
     ? { message: fv('f-message') }
-    : { title, dz: fv('f-dz'), desc: fv('f-desc'), url: fv('f-url') };
+    : { title, dz: fv('f-dz'), description: fv('f-description'), url: fv('f-url') };
   const extra = {
     lesson:   { subject: fv('f-subject'), level: fv('f-level'), duration: fv('f-duration'), slides: fv('f-slides') },
-    resource: { rtype: fv('f-rtype'), size: fv('f-size') },
+    resource: { rtype: fv('f-rtype'), filesize: fv('f-filesize') },
     video:    { subject: fv('f-subject'), duration: fv('f-duration') },
-    article:  { date: fv('f-date'), category: fv('f-category') },
+    article:  { article_date: fv('f-article_date'), category: fv('f-category') },
     announce: { emoji: fv('f-emoji'), active: fv('f-active') === 'true', link_label: fv('f-link_label'), link_url: fv('f-link_url') }
   }[_type] || {};
 
