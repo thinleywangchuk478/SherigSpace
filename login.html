@@ -212,10 +212,16 @@ window.doSignup = async function(){
     const { data, error } = await supabase.auth.signUp({ email, password: pass });
     if(error) throw error;
 
-    const uid = data.user.id;
+    // data.user can be null if email confirmation is still on in Supabase
+    const uid = data.user?.id || data.session?.user?.id;
+    if(!uid){
+      showMsg('signup-msg', '✅ Check your email to confirm your account, then log in.', 'ok');
+      setLoading('signup-btn', false, 'Create Account');
+      return;
+    }
 
     // 2. Save profile to profiles table
-    const { error: profileErr } = await supabase.from('profiles').insert({
+    const { error: profileErr } = await supabase.from('profiles').upsert({
       id: uid,
       name,
       email,
