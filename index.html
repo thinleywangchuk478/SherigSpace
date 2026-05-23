@@ -15,6 +15,14 @@ html{scroll-behavior:smooth}
 body{font-family:var(--font-en);background:var(--bg);color:var(--text);overflow-x:hidden;transition:background .35s,color .35s}
 [data-lang="dz"] h1,[data-lang="dz"] h2,[data-lang="dz"] h3,[data-lang="dz"] h4,[data-lang="dz"] p,[data-lang="dz"] span:not(.t-icon),[data-lang="dz"] a,[data-lang="dz"] li,[data-lang="dz"] button{font-family:var(--font-dz)!important;line-height:2;letter-spacing:0}
 [data-lang="dz"] .hero-title,[data-lang="dz"] .section-title{font-family:'Jomolhari',sans-serif!important;line-height:1.8}
+/* ── ANNOUNCEMENT BANNER ── */
+#announce-bar{display:none;position:fixed;top:68px;left:0;right:0;z-index:195;background:linear-gradient(90deg,#7c3a00,#c9a84c,#7c3a00);background-size:200% auto;animation:shimmer 3s linear infinite;padding:.55rem 1rem;text-align:center;font-size:.82rem;font-weight:600;color:#1a2340;letter-spacing:.02em}
+#announce-bar.show{display:block}
+#announce-bar .ann-close{position:absolute;right:1rem;top:50%;transform:translateY(-50%);background:none;border:none;color:#1a2340;font-size:1rem;cursor:pointer;opacity:.7;padding:2px 6px}
+#announce-bar .ann-close:hover{opacity:1}
+#announce-bar a{color:#1a2340;font-weight:700;text-decoration:underline;margin-left:.4rem}
+@keyframes shimmer{0%{background-position:0% center}100%{background-position:200% center}}
+
 nav{position:fixed;top:0;left:0;right:0;z-index:200;background:var(--nav-bg);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:space-between;padding:0 5%;height:68px;border-bottom:1px solid var(--border);gap:1rem}
 .nav-logo{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--gold);text-decoration:none;flex-shrink:0}
 .nav-links{display:flex;gap:1.8rem;list-style:none}
@@ -181,6 +189,13 @@ footer .gold{color:var(--gold)}
   </div>
 </nav>
 
+<!-- ANNOUNCEMENT BANNER -->
+<div id="announce-bar">
+  <span id="announce-text"></span>
+  <a id="announce-link" href="#" target="_blank" style="display:none">Learn more →</a>
+  <button class="ann-close" onclick="dismissAnnouncement()">✕</button>
+</div>
+
 <!-- HERO -->
 <section id="home">
   <div class="hero-inner">
@@ -299,7 +314,7 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 // ── STRIPE ──
 // 👇 Paste your Stripe publishable key here after creating your Stripe account
 const STRIPE_PUB_KEY = 'pk_test_YOUR_PUBLISHABLE_KEY';
-// 👇 Paste your Stripe Price ID here (from Stripe → Products → your $1.5/month plan)
+// 👇 Paste your Stripe Price ID here (from Stripe → Products → your $2/month plan)
 const STRIPE_PRICE_ID = 'price_YOUR_PRICE_ID';
 
 // ── FREE CONTENT LIMITS ──
@@ -339,7 +354,7 @@ window.startSubscribe = async function(){
     else throw new Error(data.error || 'Could not create checkout');
   } catch(err) {
     alert('Payment setup failed: ' + err.message);
-    if(btn){ btn.textContent='Subscribe $1.5/month'; btn.disabled=false; }
+    if(btn){ btn.textContent='Subscribe $2/month'; btn.disabled=false; }
   }
 };
 
@@ -368,8 +383,8 @@ function renderBanner(){
     banner.id = 'sub-banner';
     banner.innerHTML = `
       <div style="background:linear-gradient(90deg,#1a2340,#253056);border-bottom:1px solid rgba(201,168,76,.3);padding:.75rem 5%;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;position:fixed;top:68px;left:0;right:0;z-index:190">
-        <p style="font-size:.85rem;color:#e8e4dc;margin:0">⭐ <strong style="color:#c9a84c">Upgrade to Premium</strong> — unlock all lessons, videos & resources for just <strong style="color:#c9a84c">$1.5/month</strong></p>
-        <button id="sub-banner-btn" onclick="startSubscribe()" style="padding:7px 18px;background:#c9a84c;color:#1a2340;border:none;border-radius:4px;font-weight:700;font-size:.82rem;cursor:pointer;white-space:nowrap;font-family:'DM Sans',sans-serif">Subscribe $1.5/month</button>
+        <p style="font-size:.85rem;color:#e8e4dc;margin:0">⭐ <strong style="color:#c9a84c">Upgrade to Premium</strong> — unlock all lessons, videos & resources for just <strong style="color:#c9a84c">$2/month</strong></p>
+        <button id="sub-banner-btn" onclick="startSubscribe()" style="padding:7px 18px;background:#c9a84c;color:#1a2340;border:none;border-radius:4px;font-weight:700;font-size:.82rem;cursor:pointer;white-space:nowrap;font-family:'DM Sans',sans-serif">Subscribe $2/month</button>
       </div>`;
     document.body.appendChild(banner);
     // push nav down a bit
@@ -415,7 +430,7 @@ window.openProfile = async function(){
   const { data: profile } = await supabase.from('profiles').select('*').eq('id', s.id).single();
   const subStatus = isSubscriber()
     ? `<div style="text-align:center;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);border-radius:6px;padding:.6rem;margin-bottom:1rem;color:#c9a84c;font-weight:600;font-size:.85rem">⭐ Premium Subscriber</div>`
-    : `<button onclick="startSubscribe()" style="width:100%;padding:10px;background:#c9a84c;border:none;border-radius:4px;color:#1a2340;font-family:'DM Sans',sans-serif;font-size:.88rem;font-weight:700;cursor:pointer;margin-bottom:.75rem">⭐ Upgrade to Premium — $1.5/month</button>`;
+    : `<button onclick="startSubscribe()" style="width:100%;padding:10px;background:#c9a84c;border:none;border-radius:4px;color:#1a2340;font-family:'DM Sans',sans-serif;font-size:.88rem;font-weight:700;cursor:pointer;margin-bottom:.75rem">⭐ Upgrade to Premium — $2/month</button>`;
   document.getElementById('profile-body').innerHTML=`
     <div class="profile-avatar">${s.name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase()}</div>
     <div class="profile-name">${s.name}</div>
@@ -531,9 +546,51 @@ async function renderArticles(){
   }).join('');
 }
 
+async function loadAnnouncement(){
+  // Check if user already dismissed this announcement
+  const dismissed = localStorage.getItem('ann_dismissed');
+  const { data: ann } = await supabase
+    .from('announcements')
+    .select('*')
+    .eq('active', true)
+    .order('created_at', {ascending: false})
+    .limit(1)
+    .single();
+
+  if(!ann) return;
+  if(dismissed === ann.id) return; // already dismissed
+
+  const bar  = document.getElementById('announce-bar');
+  const text = document.getElementById('announce-text');
+  const link = document.getElementById('announce-link');
+
+  text.textContent = (ann.emoji ? ann.emoji + '  ' : '📢  ') + ann.message;
+
+  if(ann.link_url && ann.link_label){
+    link.href        = ann.link_url;
+    link.textContent = ann.link_label + ' →';
+    link.style.display = 'inline';
+  } else {
+    link.style.display = 'none';
+  }
+
+  bar.classList.add('show');
+  bar.setAttribute('data-ann-id', ann.id);
+
+  // Push sections down to make room
+  document.querySelector('nav').style.top = '0';
+}
+
+window.dismissAnnouncement = function(){
+  const bar = document.getElementById('announce-bar');
+  const id  = bar.getAttribute('data-ann-id');
+  if(id) localStorage.setItem('ann_dismissed', id);
+  bar.classList.remove('show');
+};
+
 async function renderAll(){
   renderNav();
-  await Promise.all([renderLessons(), renderResources(), renderVideos(), renderArticles(), loadStats()]);
+  await Promise.all([renderLessons(), renderResources(), renderVideos(), renderArticles(), loadStats(), loadAnnouncement()]);
   observeFadeIns();
 }
 
