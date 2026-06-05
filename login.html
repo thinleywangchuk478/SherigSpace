@@ -3,429 +3,419 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Admin — SherigSpace</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet"/>
+<title>SherigSpace — Login / Sign Up</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--gold:#c9a84c;--gold-light:#e8c97a;--navy:#0f1623;--navy2:#1a2340;--surface:#192035;--surface2:#202b4a;--border:rgba(201,168,76,0.2);--text:#e8e4dc;--text2:#9aa3b8;--red:#e05c5c;--green:#4caf84;--blue:#5c8de0}
-body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);min-height:100vh}
+:root{--gold:#c9a84c;--gold-light:#e8c97a;--navy:#0779a3;--navy2:#1a2340;--navy3:#0a4567;--surface:#192035;--border:rgba(201,168,76,0.2);--text:#e8e4dc;--text2:#9aa3b8;--red:#e05c5c;--green:#4caf84}
+body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);min-height:100vh;display:flex;flex-direction:column}
 
-/* ── ADMIN GATE ── */
-#gate{position:fixed;inset:0;z-index:9999;background:linear-gradient(135deg,#0f1623,#1a2340,#1a2f50);display:flex;align-items:center;justify-content:center;padding:1rem}
-#gate.hide{display:none}
-.gate-card{background:rgba(25,32,53,.98);border:1px solid var(--border);border-radius:10px;width:100%;max-width:380px;padding:2rem;text-align:center;box-shadow:0 24px 60px rgba(0,0,0,.5)}
-.gate-icon{font-size:2.5rem;margin-bottom:.75rem}
-.gate-card h2{font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--gold);margin-bottom:.3rem}
-.gate-card p{font-size:.83rem;color:var(--text2);margin-bottom:1.5rem}
-.gate-card input{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:5px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.95rem;padding:11px 13px;outline:none;text-align:center;letter-spacing:.15em;transition:border-color .2s;margin-bottom:.75rem}
-.gate-card input:focus{border-color:var(--gold)}
-.gate-card input::placeholder{letter-spacing:0;color:rgba(255,255,255,.25)}
-.gate-btn{width:100%;padding:12px;background:var(--gold);color:var(--navy2);border:none;border-radius:5px;font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:700;cursor:pointer;transition:background .2s}
-.gate-btn:hover{background:var(--gold-light)}
-.gate-err{font-size:.8rem;color:#f09090;margin-top:.6rem;min-height:1.1rem}
-.gate-hint{font-size:.75rem;color:var(--text2);margin-top:1rem}
-.gate-hint span{color:var(--gold);font-weight:600}
+/* BG */
+.bg{position:fixed;inset:0;z-index:0;background:linear-gradient(135deg,#0f1623 0%,#1a2340 60%,#1a2f50 100%)}
+.bg::before{content:'';position:absolute;top:-100px;right:-100px;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(201,168,76,.08) 0%,transparent 70%)}
+.bg::after{content:'';position:absolute;bottom:-80px;left:-80px;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(201,168,76,.05) 0%,transparent 70%)}
 
-/* ── LAYOUT ── */
-.layout{display:flex;min-height:100vh}
-.sidebar{width:220px;flex-shrink:0;background:#131c2e;border-right:1px solid var(--border);display:flex;flex-direction:column;position:sticky;top:0;height:100vh}
-.logo{padding:1.4rem 1.5rem;border-bottom:1px solid var(--border)}
-.logo h2{font-family:'Playfair Display',serif;font-size:1.15rem;color:var(--gold)}
-.logo small{display:block;font-family:'DM Sans',sans-serif;font-size:.7rem;color:var(--text2);font-weight:400;letter-spacing:.1em;text-transform:uppercase;margin-top:2px}
-.sidenav{padding:.8rem 0;flex:1}
-.sitem{display:flex;align-items:center;gap:.7rem;padding:.7rem 1.4rem;font-size:.87rem;font-weight:500;color:var(--text2);cursor:pointer;border-left:2px solid transparent;transition:all .2s}
-.sitem:hover{color:var(--text);background:rgba(255,255,255,.04)}
-.sitem.on{color:var(--gold);background:rgba(201,168,76,.07);border-left-color:var(--gold)}
-.sfoot{padding:1rem 1.5rem;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:.6rem}
-.sfoot a,.sfoot button{display:block;text-align:center;padding:8px;background:rgba(201,168,76,.1);border:1px solid var(--border);border-radius:4px;color:var(--gold);font-size:.8rem;text-decoration:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .2s;width:100%}
-.sfoot a:hover,.sfoot button:hover{background:rgba(201,168,76,.2)}
-.sfoot button.logout{background:rgba(224,92,92,.1);border-color:rgba(224,92,92,.25);color:var(--red)}
-.sfoot button.logout:hover{background:rgba(224,92,92,.2)}
+/* LAYOUT */
+.wrap{position:relative;z-index:1;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem 1rem}
+.brand{text-align:center;margin-bottom:2rem}
+.brand h1{font-family:'Playfair Display',serif;font-size:2rem;color:var(--gold);letter-spacing:.02em}
+.brand p{font-size:.85rem;color:var(--text2);margin-top:.3rem}
 
-/* ── MAIN ── */
-.main{flex:1;padding:2rem;overflow-x:hidden}
-.page{display:none}.page.on{display:block}
-.phead{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.8rem;flex-wrap:wrap;gap:1rem}
-.ptitle{font-family:'Playfair Display',serif;font-size:1.7rem}
-.psub{font-size:.83rem;color:var(--text2);margin-top:3px}
+/* CARD */
+.card{background:rgba(25,32,53,.95);border:1px solid var(--border);border-radius:10px;width:100%;max-width:420px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.4)}
 
-/* ── STATS ── */
-.stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:1rem;margin-bottom:2rem}
-.sbox{background:var(--surface);border:1px solid var(--border);border-top:2px solid var(--gold);border-radius:6px;padding:1.1rem 1.3rem}
-.sbox .n{font-family:'Playfair Display',serif;font-size:1.9rem;color:var(--gold);font-weight:700}
-.sbox .l{font-size:.75rem;color:var(--text2);text-transform:uppercase;letter-spacing:.08em;margin-top:2px}
+/* TABS */
+.tabs{display:grid;grid-template-columns:1fr 1fr}
+.tab{padding:1rem;text-align:center;font-weight:600;font-size:.9rem;cursor:pointer;color:var(--text2);background:rgba(255,255,255,.03);border-bottom:2px solid transparent;transition:all .2s}
+.tab.on{color:var(--gold);background:transparent;border-bottom-color:var(--gold)}
 
-/* ── CARD ── */
-.card{background:var(--surface);border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:1.5rem}
-.card-head{display:flex;align-items:center;justify-content:space-between;padding:.9rem 1.4rem;border-bottom:1px solid var(--border)}
-.card-head h3{font-size:.95rem;font-weight:600}
-.cbadge{background:rgba(201,168,76,.15);color:var(--gold);font-size:.7rem;font-weight:600;padding:2px 8px;border-radius:10px}
-.irow{display:grid;grid-template-columns:1fr auto;align-items:center;padding:.85rem 1.4rem;border-bottom:1px solid rgba(255,255,255,.05);gap:1rem;transition:background .15s}
-.irow:last-child{border-bottom:none}
-.irow:hover{background:rgba(255,255,255,.03)}
-.iname{font-weight:500;font-size:.88rem}
-.imeta{font-size:.76rem;color:var(--text2);margin-top:2px}
-.ibtns{display:flex;gap:.4rem}
+/* FORMS */
+.forms{padding:1.8rem}
+.form{display:none;flex-direction:column;gap:1rem}
+.form.on{display:flex}
 
-/* ── USERS TABLE ── */
-.utbl{width:100%;border-collapse:collapse;font-size:.85rem}
-.utbl th{text-align:left;padding:.7rem 1rem;font-size:.72rem;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.07em;border-bottom:1px solid var(--border)}
-.utbl td{padding:.8rem 1rem;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:middle}
-.utbl tr:last-child td{border-bottom:none}
-.utbl tr:hover td{background:rgba(255,255,255,.02)}
-.role-badge{font-size:.7rem;font-weight:600;padding:3px 8px;border-radius:10px;text-transform:uppercase}
-.role-user{background:rgba(92,141,224,.15);color:var(--blue)}
-.role-admin{background:rgba(201,168,76,.15);color:var(--gold)}
-
-/* ── BUTTONS ── */
-.btn{display:inline-flex;align-items:center;gap:.35rem;padding:8px 16px;border-radius:4px;font-size:.83rem;font-weight:600;cursor:pointer;border:none;font-family:'DM Sans',sans-serif;transition:all .2s}
-.btn-gold{background:var(--gold);color:#1a2340}.btn-gold:hover{background:var(--gold-light)}
-.btn-ghost{background:transparent;border:1px solid var(--border);color:var(--text2)}.btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
-.btn-edit{background:rgba(92,141,224,.12);border:1px solid rgba(92,141,224,.25);color:var(--blue)}.btn-edit:hover{background:rgba(92,141,224,.22)}
-.btn-del{background:rgba(224,92,92,.12);border:1px solid rgba(224,92,92,.25);color:var(--red)}.btn-del:hover{background:rgba(224,92,92,.22)}
-.btn-sm{padding:5px 9px;font-size:.76rem}
-
-/* ── MODAL ── */
-.overlay{display:none;position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.75);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:1rem}
-.overlay.open{display:flex}
-.modal{background:#131c2e;border:1px solid var(--border);border-radius:8px;width:100%;max-width:520px;max-height:92vh;overflow-y:auto}
-.mhead{display:flex;align-items:center;justify-content:space-between;padding:1.1rem 1.4rem;border-bottom:1px solid var(--border)}
-.mhead h3{font-family:'Playfair Display',serif;font-size:1.15rem;color:var(--gold)}
-.mclose{background:none;border:none;color:var(--text2);font-size:1.3rem;cursor:pointer;padding:2px 6px}.mclose:hover{color:var(--text)}
-.mbody{padding:1.4rem;display:flex;flex-direction:column;gap:.9rem}
-.mfoot{padding:.9rem 1.4rem;border-top:1px solid var(--border);display:flex;gap:.7rem;justify-content:flex-end}
-
-/* ── FORM ── */
 .field{display:flex;flex-direction:column;gap:.35rem}
 .field label{font-size:.76rem;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.07em}
-.field input,.field select,.field textarea{background:#202b4a;border:1px solid var(--border);border-radius:4px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.88rem;padding:9px 11px;outline:none;transition:border-color .2s;width:100%}
-.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--gold)}
-.field textarea{resize:vertical;min-height:75px}
-.field select option{background:#1a2340}
-.row2{display:grid;grid-template-columns:1fr 1fr;gap:.9rem}
+.field input{background:#202b4a;border:1px solid var(--border);border-radius:5px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.92rem;padding:11px 13px;outline:none;transition:border-color .2s;width:100%}
+.field input:focus{border-color:var(--gold)}
+.field input::placeholder{color:rgba(255,255,255,.25)}
 
-/* ── EMPTY / TOAST ── */
-.empty{text-align:center;padding:2.5rem 1rem;color:var(--text2)}.empty .ei{font-size:2.2rem;margin-bottom:.6rem}.empty p{font-size:.85rem}
-.toast{position:fixed;bottom:1.5rem;right:1.5rem;z-index:999;background:var(--surface);border:1px solid var(--green);border-left:3px solid var(--green);border-radius:5px;padding:11px 16px;font-size:.86rem;transform:translateY(16px);opacity:0;transition:all .3s;pointer-events:none}
-.toast.show{transform:translateY(0);opacity:1}
-.toast.err{border-color:var(--red);border-left-color:var(--red)}
+.btn{width:100%;padding:12px;background:var(--gold);color:var(--navy2);border:none;border-radius:5px;font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:700;cursor:pointer;transition:background .2s,transform .15s;margin-top:.3rem}
+.btn:hover{background:var(--gold-light);transform:translateY(-1px)}
+.btn:active{transform:translateY(0)}
 
-/* ── CHANGE PASSWORD BOX ── */
-.pwd-box{background:rgba(201,168,76,.06);border:1px solid var(--border);border-radius:6px;padding:1.2rem 1.4rem;margin-bottom:1.5rem}
-.pwd-box h4{font-size:.9rem;font-weight:600;color:var(--gold);margin-bottom:.3rem}
-.pwd-box p{font-size:.8rem;color:var(--text2);margin-bottom:1rem}
-.pwd-row{display:flex;gap:.75rem;align-items:flex-end;flex-wrap:wrap}
-.pwd-row .field{flex:1;min-width:160px}
-.pwd-row .btn{white-space:nowrap;height:38px}
+.divider{display:flex;align-items:center;gap:.75rem;color:var(--text2);font-size:.78rem}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border)}
 
-@media(max-width:650px){.sidebar{display:none}.main{padding:1rem}.row2{grid-template-columns:1fr}}
+.msg{font-size:.82rem;padding:10px 13px;border-radius:5px;display:none}
+.msg.err{background:rgba(224,92,92,.12);border:1px solid rgba(224,92,92,.3);color:#f09090;display:block}
+.msg.ok{background:rgba(76,175,132,.12);border:1px solid rgba(76,175,132,.3);color:#7ed9b0;display:block}
+
+.hint{font-size:.78rem;color:var(--text2);text-align:center}
+.hint a{color:var(--gold);cursor:pointer;text-decoration:none}
+.hint a:hover{text-decoration:underline}
+
+/* password strength */
+.strength{height:3px;border-radius:2px;margin-top:4px;background:var(--border);overflow:hidden}
+.strength-bar{height:100%;width:0;border-radius:2px;transition:width .3s,background .3s}
+
+/* MODAL */
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.65);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:1000;
+  padding:1rem;
+}
+
+.modal.show{
+  display:flex;
+}
+
+.modal-box{
+  width:100%;
+  max-width:400px;
+  background:rgba(25,32,53,.98);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:1.5rem;
+  box-shadow:0 20px 60px rgba(0,0,0,.5);
+}
+
+.modal-box h2{
+  color:var(--gold);
+  margin-bottom:.5rem;
+  font-size:1.3rem;
+}
+
+.modal-text{
+  color:var(--text2);
+  font-size:.85rem;
+  margin-bottom:1rem;
+}
+
+.modal-actions{
+  display:flex;
+  gap:.7rem;
+  margin-top:1rem;
+}
+
+.cancel-btn{
+  background:#39415f;
+  color:var(--text);
+}
+
+.cancel-btn:hover{
+  background:#4a5375;
+}
+
+/* FOOTER */
+footer{position:relative;z-index:1;text-align:center;padding:1.2rem;font-size:.78rem;color:rgba(255,255,255,.25)}
+footer span{color:var(--gold)}
 </style>
 </head>
 <body>
+<div class="bg"></div>
 
-<!-- ── ADMIN GATE ── -->
-<div id="gate">
-  <div class="gate-card">
-    <div class="gate-icon">🔐</div>
-    <h2>Admin Access</h2>
-    <p>This area is restricted. Enter your admin password to continue.</p>
-    <input id="gate-input" type="password" placeholder="Enter admin password" onkeydown="if(event.key==='Enter') checkGate()"/>
-    <button class="gate-btn" onclick="checkGate()">Unlock Admin</button>
-    <div class="gate-err" id="gate-err"></div>
-    <p class="gate-hint">Default password: <span>admin1234</span><br>Change it inside Settings after login.</p>
+<div class="wrap">
+  <div class="brand">
+    <h1>SherigSpace</h1>
+    <p>Your Teaching & Learning Portal</p>
+  </div>
+
+  <div class="card">
+    <div class="tabs">
+      <div class="tab on" onclick="switchTab('login')">Log In</div>
+      <div class="tab" onclick="switchTab('signup')">Sign Up</div>
+    </div>
+
+    <div class="forms">
+
+      <!-- LOGIN -->
+      <form class="form on" id="f-login" onsubmit="doLogin(event)">
+        <div id="login-msg" class="msg"></div>
+
+        <div class="field">
+          <label>Email</label>
+          <input id="l-email" type="email" placeholder="you@example.com" required/>
+        </div>
+
+        <div class="field">
+          <label>Password</label>
+          <input id="l-pass" type="password" placeholder="Your password" required/>
+        </div>
+
+        <p class="hint" style="text-align:right;margin-top:-8px;">
+          <a onclick="openForgotPassword()">Forgot Password?</a>
+        </p>
+
+        <button class="btn" type="submit">Log In</button>
+
+        <p class="hint">
+          Don't have an account?
+          <a onclick="switchTab('signup')">Sign up here</a>
+        </p>
+      </form>
+
+      <!-- SIGNUP -->
+      <form class="form" id="f-signup" onsubmit="doSignup(event)">
+        <div id="signup-msg" class="msg"></div>
+
+        <div class="field">
+          <label>User Name</label>
+          <input id="s-name" type="text" placeholder="e.g. Tenzin Dorji" required/>
+        </div>
+
+        <div class="field">
+          <label>Email</label>
+          <input id="s-email" type="email" placeholder="you@example.com" required/>
+        </div>
+
+        <div class="field">
+          <label>Password</label>
+          <input id="s-pass" type="password" placeholder="Min. 6 characters" required oninput="checkStrength(this.value)"/>
+          <div class="strength">
+            <div class="strength-bar" id="sbar"></div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Confirm Password</label>
+          <input id="s-pass2" type="password" placeholder="Repeat password" required/>
+        </div>
+
+        <button class="btn" type="submit">Create Account</button>
+
+        <p class="hint">
+          Already have an account?
+          <a onclick="switchTab('login')">Log in here</a>
+        </p>
+      </form>
+
+    </div>
   </div>
 </div>
 
-<!-- ── ADMIN DASHBOARD ── -->
-<div class="layout">
-  <aside class="sidebar">
-    <div class="logo"><h2>EduSpace</h2><small>Admin Panel</small></div>
-    <nav class="sidenav">
-      <div class="sitem on"  onclick="go('dash')">🏠 &nbsp;Dashboard</div>
-      <div class="sitem"     onclick="go('lessons')">📚 &nbsp;Lessons</div>
-      <div class="sitem"     onclick="go('resources')">📁 &nbsp;Resources</div>
-      <div class="sitem"     onclick="go('videos')">🎥 &nbsp;Videos</div>
-      <div class="sitem"     onclick="go('articles')">✍️ &nbsp;Articles</div>
-      <div class="sitem"     onclick="go('users')">👥 &nbsp;Users</div>
-      <div class="sitem"     onclick="go('settings')">⚙️ &nbsp;Settings</div>
-    </nav>
-    <div class="sfoot">
-      <a href="index.html" target="_blank">↗ View Website</a>
-      <button class="logout" onclick="lockAdmin()">🔒 Lock Admin</button>
-    </div>
-  </aside>
+<!-- FORGOT PASSWORD MODAL -->
+<div id="forgotModal" class="modal">
+  <div class="modal-box">
 
-  <main class="main">
+    <h2>Reset Password</h2>
+    <p class="modal-text">Enter your registered email address.</p>
 
-    <!-- DASHBOARD -->
-    <div class="page on" id="p-dash">
-      <div class="phead"><div><div class="ptitle">Dashboard</div><div class="psub">Overview of your EduSpace content</div></div></div>
-      <div class="stats" id="d-stats"></div>
-      <div class="card"><div class="card-head"><h3>Recent Lessons</h3><button class="btn btn-ghost btn-sm" onclick="go('lessons')">View All</button></div><div id="d-lessons"></div></div>
-      <div class="card"><div class="card-head"><h3>Recent Videos</h3><button class="btn btn-ghost btn-sm" onclick="go('videos')">View All</button></div><div id="d-videos"></div></div>
+    <div id="forgot-msg" class="msg"></div>
+
+    <div class="field">
+      <label>Email</label>
+      <input id="fp-email" type="email" placeholder="you@example.com"/>
     </div>
 
-    <!-- LESSONS -->
-    <div class="page" id="p-lessons">
-      <div class="phead"><div><div class="ptitle">Lessons</div><div class="psub">Add and manage your teaching lessons</div></div><button class="btn btn-gold" onclick="openForm('lesson')">+ Add Lesson</button></div>
-      <div class="card"><div class="card-head"><h3>All Lessons</h3><span class="cbadge" id="c-lessons">0</span></div><div id="l-lessons"></div></div>
+    <div class="field">
+      <label>New Password</label>
+      <input id="fp-pass" type="password" placeholder="New password"/>
     </div>
 
-    <!-- RESOURCES -->
-    <div class="page" id="p-resources">
-      <div class="phead"><div><div class="ptitle">Resources</div><div class="psub">Manage downloadable files and guides</div></div><button class="btn btn-gold" onclick="openForm('resource')">+ Add Resource</button></div>
-      <div class="card"><div class="card-head"><h3>All Resources</h3><span class="cbadge" id="c-resources">0</span></div><div id="l-resources"></div></div>
+    <div class="field">
+      <label>Confirm Password</label>
+      <input id="fp-pass2" type="password" placeholder="Repeat new password"/>
     </div>
 
-    <!-- VIDEOS -->
-    <div class="page" id="p-videos">
-      <div class="phead"><div><div class="ptitle">Videos</div><div class="psub">Manage your video lessons</div></div><button class="btn btn-gold" onclick="openForm('video')">+ Add Video</button></div>
-      <div class="card"><div class="card-head"><h3>All Videos</h3><span class="cbadge" id="c-videos">0</span></div><div id="l-videos"></div></div>
+    <div class="modal-actions">
+      <button class="btn" onclick="resetPassword()">Reset Password</button>
+      <button class="btn cancel-btn" onclick="closeForgotPassword()">Cancel</button>
     </div>
 
-    <!-- ARTICLES -->
-    <div class="page" id="p-articles">
-      <div class="phead"><div><div class="ptitle">Articles</div><div class="psub">Manage your blog posts</div></div><button class="btn btn-gold" onclick="openForm('article')">+ Add Article</button></div>
-      <div class="card"><div class="card-head"><h3>All Articles</h3><span class="cbadge" id="c-articles">0</span></div><div id="l-articles"></div></div>
-    </div>
-
-    <!-- USERS -->
-    <div class="page" id="p-users">
-      <div class="phead"><div><div class="ptitle">Users</div><div class="psub">People who have signed up to your site</div></div></div>
-      <div class="card"><div class="card-head"><h3>All Users</h3><span class="cbadge" id="c-users">0</span></div><div id="l-users" style="overflow-x:auto;padding:.5rem 0"></div></div>
-    </div>
-
-    <!-- SETTINGS -->
-    <div class="page" id="p-settings">
-      <div class="phead"><div><div class="ptitle">Settings</div><div class="psub">Manage your admin password and site info</div></div></div>
-
-      <div class="pwd-box">
-        <h4>🔑 Change Admin Password</h4>
-        <p>Update the password used to access this admin panel. Write it down somewhere safe!</p>
-        <div class="pwd-row">
-          <div class="field"><label>Current Password</label><input id="pwd-cur" type="password" placeholder="Current password"/></div>
-          <div class="field"><label>New Password</label><input id="pwd-new" type="password" placeholder="New password (min 6 chars)"/></div>
-          <div class="field"><label>Confirm New</label><input id="pwd-confirm" type="password" placeholder="Repeat new password"/></div>
-          <button class="btn btn-gold" onclick="changePassword()">Update</button>
-        </div>
-        <div id="pwd-msg" style="font-size:.8rem;margin-top:.6rem;min-height:1rem"></div>
-      </div>
-
-      <div class="card">
-        <div class="card-head"><h3>Site Information</h3></div>
-        <div style="padding:1.4rem;display:flex;flex-direction:column;gap:1rem">
-          <div class="field"><label>Site Name</label><input id="s-sitename" placeholder="EduSpace"/></div>
-          <div class="field"><label>Your Name / Tagline</label><input id="s-tagline" placeholder="e.g. Passionate Educator · Bhutan"/></div>
-          <div class="field"><label>Contact Email</label><input id="s-email" type="email" placeholder="your@email.com"/></div>
-          <button class="btn btn-gold" style="width:fit-content" onclick="saveSettings()">Save Settings</button>
-        </div>
-      </div>
-    </div>
-
-  </main>
-</div>
-
-<!-- MODAL -->
-<div class="overlay" id="overlay">
-  <div class="modal">
-    <div class="mhead"><h3 id="m-title">Add</h3><button class="mclose" onclick="closeForm()">✕</button></div>
-    <div class="mbody" id="m-body"></div>
-    <div class="mfoot"><button class="btn btn-ghost" onclick="closeForm()">Cancel</button><button class="btn btn-gold" onclick="saveItem()">Save</button></div>
   </div>
 </div>
 
-<div class="toast" id="toast"></div>
+<footer>© Thidhu2026 <span>SherigSpace</span></footer>
 
 <script>
-// ── ADMIN PASSWORD ──
-const DEFAULT_PASS = 'admin1234';
-function getAdminPass(){ return localStorage.getItem('edu_adminpass')||DEFAULT_PASS; }
-
-function checkGate(){
-  const v = document.getElementById('gate-input').value;
-  if(v === getAdminPass()){
-    sessionStorage.setItem('edu_admin_auth','1');
-    document.getElementById('gate').classList.add('hide');
-    renderAll(); loadSettings();
-  } else {
-    document.getElementById('gate-err').textContent = 'Incorrect password. Try again.';
-    document.getElementById('gate-input').value='';
-    setTimeout(()=>document.getElementById('gate-err').textContent='', 2500);
+// ── HELPERS ──
+function DB_get(k){
+  try{
+    return JSON.parse(localStorage.getItem(k)||'null')
+  }catch{
+    return null
   }
 }
-document.getElementById('gate-input').addEventListener('keydown', e=>{ if(e.key==='Enter') checkGate(); });
 
-function lockAdmin(){
-  sessionStorage.removeItem('edu_admin_auth');
-  location.reload();
+function DB_set(k,v){
+  localStorage.setItem(k,JSON.stringify(v))
 }
 
-// Auto-unlock if already authenticated this session
-if(sessionStorage.getItem('edu_admin_auth')==='1'){
-  document.getElementById('gate').classList.add('hide');
+function showMsg(id,msg,type){
+  const el=document.getElementById(id);
+  el.textContent=msg;
+  el.className='msg '+type
 }
 
-// ── DATA ──
-function DB_get(k){ try{ return JSON.parse(localStorage.getItem(k)||'[]') }catch{ return [] } }
-function DB_set(k,v){ localStorage.setItem(k,JSON.stringify(v)) }
-function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;') }
+// ── TAB SWITCH ──
+function switchTab(t){
+  document.querySelectorAll('.tab').forEach((el,i)=>
+    el.classList.toggle('on',(t==='login'&&i===0)||(t==='signup'&&i===1))
+  );
 
-// ── NAVIGATION ──
-function go(p){
-  document.querySelectorAll('.page').forEach(e=>e.classList.remove('on'));
-  document.querySelectorAll('.sitem').forEach(e=>e.classList.remove('on'));
-  document.getElementById('p-'+p).classList.add('on');
-  const map={dash:'dashboard',lessons:'lessons',resources:'resources',videos:'videos',articles:'articles',users:'users',settings:'settings'};
-  document.querySelectorAll('.sitem').forEach(e=>{ if(e.textContent.trim().toLowerCase().includes(map[p]||p)) e.classList.add('on'); });
-  renderAll();
+  document.getElementById('f-login').classList.toggle('on', t==='login');
+  document.getElementById('f-signup').classList.toggle('on', t==='signup');
 }
 
-// ── RENDER ──
-function renderAll(){
-  const L=DB_get('edu_lessons'),R=DB_get('edu_resources'),V=DB_get('edu_videos'),A=DB_get('edu_articles'),U=DB_get('edu_users');
-  document.getElementById('d-stats').innerHTML=stat(L.length,'Lessons')+stat(R.length,'Resources')+stat(V.length,'Videos')+stat(U.length,'Users');
-  document.getElementById('c-lessons').textContent=L.length;
-  document.getElementById('c-resources').textContent=R.length;
-  document.getElementById('c-videos').textContent=V.length;
-  document.getElementById('c-articles').textContent=A.length;
-  document.getElementById('c-users').textContent=U.length;
-  document.getElementById('d-lessons').innerHTML=L.length?L.slice(-3).reverse().map(i=>row(i,'lesson')).join(''):empty('📚','No lessons yet');
-  document.getElementById('d-videos').innerHTML=V.length?V.slice(-3).reverse().map(i=>row(i,'video')).join(''):empty('🎥','No videos yet');
-  document.getElementById('l-lessons').innerHTML=L.length?L.map(i=>row(i,'lesson')).join(''):empty('📚','No lessons yet. Click + Add Lesson!');
-  document.getElementById('l-resources').innerHTML=R.length?R.map(i=>row(i,'resource')).join(''):empty('📁','No resources yet. Click + Add Resource!');
-  document.getElementById('l-videos').innerHTML=V.length?V.map(i=>row(i,'video')).join(''):empty('🎥','No videos yet. Click + Add Video!');
-  document.getElementById('l-articles').innerHTML=A.length?A.map(i=>row(i,'article')).join(''):empty('✍️','No articles yet. Click + Add Article!');
-  renderUsers(U);
+// ── PASSWORD STRENGTH ──
+function checkStrength(v){
+  const bar = document.getElementById('sbar');
+
+  let score = 0;
+
+  if(v.length>=6) score++;
+  if(v.length>=10) score++;
+  if(/[A-Z]/.test(v)) score++;
+  if(/[0-9]/.test(v)) score++;
+  if(/[^A-Za-z0-9]/.test(v)) score++;
+
+  const pct = [0,20,40,65,85,100][score];
+  const col = ['#e05c5c','#e05c5c','#e8a84c','#c9a84c','#4caf84','#4caf84'][score];
+
+  bar.style.width=pct+'%';
+  bar.style.background=col;
 }
 
-function renderUsers(U){
-  if(!U.length){ document.getElementById('l-users').innerHTML=empty('👥','No users signed up yet.'); return; }
-  document.getElementById('l-users').innerHTML=`<table class="utbl">
-    <thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Joined</th><th>Action</th></tr></thead>
-    <tbody>${U.map(u=>`<tr>
-      <td>${esc(u.name)}</td>
-      <td>${esc(u.email)}</td>
-      <td><span class="role-badge role-${u.role}">${u.role}</span></td>
-      <td>${new Date(u.joined).toLocaleDateString()}</td>
-      <td><button class="btn btn-del btn-sm" onclick="delUser('${u.id}')">Remove</button></td>
-    </tr>`).join('')}</tbody>
-  </table>`;
+// ── SIGNUP ──
+function doSignup(e){
+  e.preventDefault();
+
+  const name  = document.getElementById('s-name').value.trim();
+  const email = document.getElementById('s-email').value.trim().toLowerCase();
+  const pass  = document.getElementById('s-pass').value;
+  const pass2 = document.getElementById('s-pass2').value;
+
+  if(pass.length<6){
+    showMsg('signup-msg','Password must be at least 6 characters.','err');
+    return;
+  }
+
+  if(pass!==pass2){
+    showMsg('signup-msg','Passwords do not match.','err');
+    return;
+  }
+
+  const users = DB_get('edu_users')||[];
+
+  if(users.find(u=>u.email===email)){
+    showMsg('signup-msg','An account with this email already exists.','err');
+    return;
+  }
+
+  const hashed = btoa(pass+'__edu__'+email);
+
+  const user = {
+    id: Date.now().toString(36),
+    name,
+    email,
+    hashed,
+    role:'user',
+    joined: new Date().toISOString(),
+    downloads:[],
+    comments:[]
+  };
+
+  users.push(user);
+
+  DB_set('edu_users', users);
+
+  showMsg('signup-msg','Account created! Logging you in…','ok');
+
+  setTimeout(()=>{
+    loginUser(user);
+  },900);
 }
 
-function stat(n,l){return`<div class="sbox"><div class="n">${n}</div><div class="l">${l}</div></div>`}
-function empty(icon,msg){return`<div class="empty"><div class="ei">${icon}</div><p>${msg}</p></div>`}
-function row(item,type){
-  const sub={lesson:`${item.subject||'—'} · ${item.level||'—'} · ${item.duration||'—'}`,resource:`${item.rtype||'—'} · ${item.size||'—'}`,video:`${item.subject||'—'} · ${item.duration||'—'}`,article:`${item.date||'—'} · ${item.category||'—'}`}[type]||'';
-  return`<div class="irow"><div><div class="iname">${esc(item.title||'Untitled')}</div><div class="imeta">${esc(sub)}</div></div><div class="ibtns"><button class="btn btn-edit btn-sm" onclick="openForm('${type}','${item.id}')">✏ Edit</button><button class="btn btn-del btn-sm" onclick="del('${type}','${item.id}')">✕</button></div></div>`;
+// ── LOGIN ──
+function doLogin(e){
+  e.preventDefault();
+
+  const email = document.getElementById('l-email').value.trim().toLowerCase();
+  const pass  = document.getElementById('l-pass').value;
+
+  const hashed = btoa(pass+'__edu__'+email);
+
+  const users = DB_get('edu_users')||[];
+
+  const user = users.find(u=>u.email===email && u.hashed===hashed);
+
+  if(!user){
+    showMsg('login-msg','Incorrect email or password.','err');
+    return;
+  }
+
+  loginUser(user);
 }
 
-// ── USERS ──
-function delUser(id){
-  if(!confirm('Remove this user?')) return;
-  DB_set('edu_users', DB_get('edu_users').filter(u=>u.id!==id));
-  toast('User removed.');renderAll();
+function loginUser(user){
+  DB_set('edu_session',{
+    id:user.id,
+    name:user.name,
+    email:user.email,
+    role:user.role
+  });
+
+  window.location.href = 'index.html';
 }
 
-// ── SETTINGS ──
-function loadSettings(){
-  const s=DB_get('edu_settings')[0]||{};
-  document.getElementById('s-sitename').value=s.sitename||'EduSpace';
-  document.getElementById('s-tagline').value=s.tagline||'';
-  document.getElementById('s-email').value=s.email||'';
-}
-function saveSettings(){
-  DB_set('edu_settings',[{sitename:document.getElementById('s-sitename').value,tagline:document.getElementById('s-tagline').value,email:document.getElementById('s-email').value}]);
-  toast('Settings saved! ✓');
-}
-function changePassword(){
-  const cur=document.getElementById('pwd-cur').value;
-  const nw=document.getElementById('pwd-new').value;
-  const cf=document.getElementById('pwd-confirm').value;
-  const msg=document.getElementById('pwd-msg');
-  if(cur!==getAdminPass()){msg.style.color='#f09090';msg.textContent='Current password is incorrect.';return;}
-  if(nw.length<6){msg.style.color='#f09090';msg.textContent='New password must be at least 6 characters.';return;}
-  if(nw!==cf){msg.style.color='#f09090';msg.textContent='Passwords do not match.';return;}
-  localStorage.setItem('edu_adminpass',nw);
-  msg.style.color='#7ed9b0';msg.textContent='Password changed successfully!';
-  document.getElementById('pwd-cur').value='';document.getElementById('pwd-new').value='';document.getElementById('pwd-confirm').value='';
-  setTimeout(()=>msg.textContent='',3000);
+// ── FORGOT PASSWORD ──
+function openForgotPassword(){
+  document.getElementById('forgotModal').classList.add('show');
 }
 
-// ── FORM ──
-const SUBJECTS=['Mathematics','Science','Language Arts','History','Technology','Social Studies','Arts','Physical Education','Other'];
-const LEVELS=['Beginner','Intermediate','Advanced'];
-const RTYPES=['PDF','DOCX','Image','Video Link','Spreadsheet','Presentation','Other'];
-let _type=null,_id=null;
-
-function openForm(type,id=null){
-  _type=type;_id=id;
-  const item=id?(DB_get('edu_'+type+'s').find(i=>i.id===id)||{}): {};
-  document.getElementById('m-title').textContent=(id?'Edit ':'Add ')+{lesson:'Lesson',resource:'Resource',video:'Video',article:'Article'}[type];
-  document.getElementById('m-body').innerHTML=buildForm(type,item);
-  document.getElementById('overlay').classList.add('open');
-}
-function closeForm(){document.getElementById('overlay').classList.remove('open');_type=null;_id=null;}
-function sel(opts,val){return opts.map(o=>`<option${o===val?' selected':''}>${o}</option>`).join('')}
-function fv(id){const e=document.getElementById(id);return e?e.value.trim():''}
-
-function buildForm(type,d={}){
-  const v=k=>d[k]||'';
-  if(type==='lesson') return`
-    <div class="field"><label>Lesson Title *</label><input id="f-title" placeholder="e.g. Introduction to Algebra" value="${esc(v('title'))}"/></div>
-    <div class="row2"><div class="field"><label>Subject</label><select id="f-subject"><option value="">-- Select --</option>${sel(SUBJECTS,v('subject'))}</select></div><div class="field"><label>Level</label><select id="f-level"><option value="">-- Select --</option>${sel(LEVELS,v('level'))}</select></div></div>
-    <div class="row2"><div class="field"><label>Duration</label><input id="f-duration" placeholder="e.g. 45 min" value="${esc(v('duration'))}"/></div><div class="field"><label>Slides / Pages</label><input id="f-slides" placeholder="e.g. 12 slides" value="${esc(v('slides'))}"/></div></div>
-    <div class="field"><label>Description</label><textarea id="f-desc" placeholder="What will students learn?">${esc(v('desc'))}</textarea></div>
-    <div class="field"><label>File or Link URL</label><input id="f-url" placeholder="https://..." value="${esc(v('url'))}"/></div>
-    <div class="field"><label>Dzongkha Title (optional)</label><input id="f-dz" placeholder="སློབ་ཚན་གྱི་མིང་" value="${esc(v('dz'))}"/></div>`;
-  if(type==='resource') return`
-    <div class="field"><label>Resource Title *</label><input id="f-title" placeholder="e.g. Algebra Worksheet Pack" value="${esc(v('title'))}"/></div>
-    <div class="row2"><div class="field"><label>File Type</label><select id="f-rtype"><option value="">-- Select --</option>${sel(RTYPES,v('rtype'))}</select></div><div class="field"><label>File Size</label><input id="f-size" placeholder="e.g. 2.4 MB" value="${esc(v('size'))}"/></div></div>
-    <div class="field"><label>Description</label><textarea id="f-desc" placeholder="What does this contain?">${esc(v('desc'))}</textarea></div>
-    <div class="field"><label>Download / Link URL</label><input id="f-url" placeholder="https://..." value="${esc(v('url'))}"/></div>
-    <div class="field"><label>Dzongkha Title (optional)</label><input id="f-dz" placeholder="ཡིག་ཆའི་མིང་" value="${esc(v('dz'))}"/></div>`;
-  if(type==='video') return`
-    <div class="field"><label>Video Title *</label><input id="f-title" placeholder="e.g. Coding Basics Part 1" value="${esc(v('title'))}"/></div>
-    <div class="field"><label>YouTube / Video URL *</label><input id="f-url" placeholder="https://youtube.com/watch?v=..." value="${esc(v('url'))}"/></div>
-    <div class="row2"><div class="field"><label>Subject</label><select id="f-subject"><option value="">-- Select --</option>${sel(SUBJECTS,v('subject'))}</select></div><div class="field"><label>Duration</label><input id="f-duration" placeholder="e.g. 12:30" value="${esc(v('duration'))}"/></div></div>
-    <div class="field"><label>Description</label><textarea id="f-desc" placeholder="What will students learn?">${esc(v('desc'))}</textarea></div>
-    <div class="field"><label>Dzongkha Title (optional)</label><input id="f-dz" placeholder="བརྙན་ཐམས་ཀྱི་མིང་" value="${esc(v('dz'))}"/></div>`;
-  if(type==='article') return`
-    <div class="field"><label>Article Title *</label><input id="f-title" placeholder="e.g. 5 Ways to Make Math Engaging" value="${esc(v('title'))}"/></div>
-    <div class="row2"><div class="field"><label>Date</label><input id="f-date" type="date" value="${esc(v('date'))}"/></div><div class="field"><label>Category</label><input id="f-category" placeholder="e.g. Pedagogy" value="${esc(v('category'))}"/></div></div>
-    <div class="field"><label>Summary</label><textarea id="f-desc" placeholder="Short summary...">${esc(v('desc'))}</textarea></div>
-    <div class="field"><label>Article Link URL</label><input id="f-url" placeholder="https://..." value="${esc(v('url'))}"/></div>
-    <div class="field"><label>Dzongkha Title (optional)</label><input id="f-dz" placeholder="རྩོམ་ཡིག་གི་མིང་" value="${esc(v('dz'))}"/></div>`;
+function closeForgotPassword(){
+  document.getElementById('forgotModal').classList.remove('show');
+  document.getElementById('forgot-msg').className='msg';
 }
 
-function saveItem(){
-  const title=fv('f-title');
-  if(!title){toast('Please enter a title.',true);return;}
-  const key='edu_'+_type+'s';
-  const items=DB_get(key);
-  const base={id:_id||(Date.now().toString(36)+Math.random().toString(36).slice(2,5)),title,dz:fv('f-dz'),desc:fv('f-desc'),url:fv('f-url')};
-  const extra={lesson:{subject:fv('f-subject'),level:fv('f-level'),duration:fv('f-duration'),slides:fv('f-slides')},resource:{rtype:fv('f-rtype'),size:fv('f-size')},video:{subject:fv('f-subject'),duration:fv('f-duration')},article:{date:fv('f-date'),category:fv('f-category')}}[_type]||{};
-  const newItem={...base,...extra};
-  if(_id){const idx=items.findIndex(i=>i.id===_id);if(idx>-1)items[idx]=newItem;else items.push(newItem);toast('Updated! ✓');}
-  else{items.push(newItem);toast('Added! ✓');}
-  DB_set(key,items);closeForm();renderAll();
+function resetPassword(){
+
+  const email = document.getElementById('fp-email').value.trim().toLowerCase();
+  const pass  = document.getElementById('fp-pass').value;
+  const pass2 = document.getElementById('fp-pass2').value;
+
+  const users = DB_get('edu_users') || [];
+
+  const userIndex = users.findIndex(u => u.email === email);
+
+  if(userIndex === -1){
+    showMsg('forgot-msg','No account found with this email.','err');
+    return;
+  }
+
+  if(pass.length < 6){
+    showMsg('forgot-msg','Password must be at least 6 characters.','err');
+    return;
+  }
+
+  if(pass !== pass2){
+    showMsg('forgot-msg','Passwords do not match.','err');
+    return;
+  }
+
+  users[userIndex].hashed = btoa(pass + '__edu__' + email);
+
+  DB_set('edu_users', users);
+
+  showMsg('forgot-msg','Password reset successful!','ok');
+
+  setTimeout(()=>{
+    closeForgotPassword();
+  },1200);
 }
 
-function del(type,id){
-  if(!confirm('Delete this item?'))return;
-  DB_set('edu_'+type+'s',DB_get('edu_'+type+'s').filter(i=>i.id!==id));
-  toast('Deleted.');renderAll();
+// ── AUTO REDIRECT ──
+const session = DB_get('edu_session');
+
+if(session){
+  window.location.href='index.html';
 }
-
-function toast(msg,isErr=false){
-  const t=document.getElementById('toast');
-  t.textContent=msg;t.className='toast'+(isErr?' err':'');t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),3000);
-}
-
-document.getElementById('overlay').addEventListener('click',e=>{if(e.target===document.getElementById('overlay'))closeForm();});
-
-// Init
-if(sessionStorage.getItem('edu_admin_auth')==='1'){renderAll();loadSettings();}
 </script>
 </body>
 </html>
