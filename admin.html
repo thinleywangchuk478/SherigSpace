@@ -220,12 +220,12 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);m
 
 <div class="toast" id="toast"></div>
 
-<script type="module">
-import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
-
-const SUPABASE_URL = 'https://kgqlcjdjdhssactfezwi.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtncWxjamRqZGhzc2FjdGZlendpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk0NTE2MzQsImV4cCI6MjA5NTAyNzYzNH0.6hJpg9Zput8wnuDfq7wzb5dRC2KkuRmkmaz870U0Lto';
-const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const sb = supabase.createClient(
+  'https://kgqlcjdjdhssactfezwi.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtncWxjamRqZGhzc2FjdGZlendpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk0NTE2MzQsImV4cCI6MjA5NTAyNzYzNH0.6hJpg9Zput8wnuDfq7wzb5dRC2KkuRmkmaz870U0Lto'
+);
 
 // ── GATE ──
 const DEFAULT_PASS = 'admin1234';
@@ -266,10 +266,11 @@ function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;')
 window.go = function(p){
   document.querySelectorAll('.page').forEach(e=>e.classList.remove('on'));
   document.querySelectorAll('.sitem').forEach(e=>e.classList.remove('on'));
-  document.getElementById('p-'+p).classList.add('on');
+  const pg = document.getElementById('p-'+p);
+  if(pg) pg.classList.add('on');
   const labels={dash:'dashboard',lessons:'lessons',resources:'resources',videos:'videos',articles:'articles',announce:'announcements',users:'users',settings:'settings'};
   document.querySelectorAll('.sitem').forEach(e=>{ if(e.textContent.trim().toLowerCase().includes(labels[p]||p)) e.classList.add('on'); });
-  if(p==='dash') renderAll();
+  renderAll();
 };
 
 // ── RENDER ALL ──
@@ -282,12 +283,12 @@ async function renderAll(){
     { data: U, count: uc },
     { data: AN, count: anc }
   ] = await Promise.all([
-    supabase.from('lessons').select('*',{count:'exact'}).order('created_at',{ascending:false}),
-    supabase.from('resources').select('*',{count:'exact'}).order('created_at',{ascending:false}),
-    supabase.from('videos').select('*',{count:'exact'}).order('created_at',{ascending:false}),
-    supabase.from('articles').select('*',{count:'exact'}).order('created_at',{ascending:false}),
-    supabase.from('profiles').select('*',{count:'exact'}).order('joined_at',{ascending:false}),
-    supabase.from('announcements').select('*',{count:'exact'}).order('created_at',{ascending:false})
+    sb.from('lessons').select('*',{count:'exact'}).order('created_at',{ascending:false}),
+    sb.from('resources').select('*',{count:'exact'}).order('created_at',{ascending:false}),
+    sb.from('videos').select('*',{count:'exact'}).order('created_at',{ascending:false}),
+    sb.from('articles').select('*',{count:'exact'}).order('created_at',{ascending:false}),
+    sb.from('profiles').select('*',{count:'exact'}).order('joined_at',{ascending:false}),
+    sb.from('announcements').select('*',{count:'exact'}).order('created_at',{ascending:false})
   ]);
 
   document.getElementById('d-stats').innerHTML =
@@ -348,7 +349,7 @@ window.openForm = async function(type, id=null){
   let item = {};
   if(id){
     const tbl = type==='announce' ? 'announcements' : type+'s';
-    const { data } = await supabase.from(tbl).select('*').eq('id',id).single();
+    const { data } = await sb.from(tbl).select('*').eq('id',id).single();
     item = data || {};
   }
   document.getElementById('m-title').textContent = (id?'Edit ':'Add ')+{lesson:'Lesson',resource:'Resource',video:'Video',article:'Article',announce:'Announcement'}[type];
@@ -422,11 +423,11 @@ window.saveItem = async function(){
   const newItem = { ...base, ...extra };
   let error;
   if(_id){
-    ({ error } = await supabase.from(table).update(newItem).eq('id', _id));
+    ({ error } = await sb.from(table).update(newItem).eq('id', _id));
     if(!error) toast('Updated! ✓');
   } else {
     newItem.id = Date.now().toString(36) + Math.random().toString(36).slice(2,5);
-    ({ error } = await supabase.from(table).insert(newItem));
+    ({ error } = await sb.from(table).insert(newItem));
     if(!error) toast('Added! ✓');
   }
   if(error){ toast('Error: ' + error.message, true); }
@@ -437,7 +438,7 @@ window.saveItem = async function(){
 window.del = async function(type, id){
   if(!confirm('Delete this item?')) return;
   const tbl = type === 'announce' ? 'announcements' : type+'s';
-  const { error } = await supabase.from(tbl).delete().eq('id', id);
+  const { error } = await sb.from(tbl).delete().eq('id', id);
   if(error){ toast('Error: ' + error.message, true); return; }
   toast('Deleted.');
   renderAll();
