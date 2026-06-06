@@ -9,20 +9,27 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{--gold:#c9a84c;--gold-light:#e8c97a;--navy:#0f1623;--navy2:#1a2340;--surface:#192035;--surface2:#202b4a;--border:rgba(201,168,76,0.2);--text:#e8e4dc;--text2:#9aa3b8;--red:#e05c5c;--green:#4caf84;--blue:#5c8de0}
 body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);min-height:100vh}
+
+/* ── GATE (fallback if someone opens admin.html directly) ── */
 #gate{position:fixed;inset:0;z-index:9999;background:linear-gradient(135deg,#0f1623,#1a2340,#1a2f50);display:flex;align-items:center;justify-content:center;padding:1rem}
 #gate.hide{display:none}
-.gate-card{background:rgba(25,32,53,.98);border:1px solid var(--border);border-radius:10px;width:100%;max-width:380px;padding:2rem;text-align:center;box-shadow:0 24px 60px rgba(0,0,0,.5)}
+.gate-card{background:rgba(25,32,53,.98);border:1px solid var(--border);border-radius:10px;width:100%;max-width:400px;padding:2rem;text-align:center;box-shadow:0 24px 60px rgba(0,0,0,.5)}
 .gate-icon{font-size:2.5rem;margin-bottom:.75rem}
 .gate-card h2{font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--gold);margin-bottom:.3rem}
-.gate-card p{font-size:.83rem;color:var(--text2);margin-bottom:1.5rem}
+.gate-card p{font-size:.83rem;color:var(--text2);margin-bottom:1.2rem}
 .gate-card input{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:5px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.95rem;padding:11px 13px;outline:none;text-align:center;letter-spacing:.15em;transition:border-color .2s;margin-bottom:.75rem}
-.gate-card input:focus{border-color:var(--gold)}
 .gate-card input::placeholder{letter-spacing:0;color:rgba(255,255,255,.25)}
+.gate-card input:focus{border-color:var(--gold)}
 .gate-btn{width:100%;padding:12px;background:var(--gold);color:var(--navy2);border:none;border-radius:5px;font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:700;cursor:pointer;transition:background .2s}
 .gate-btn:hover{background:var(--gold-light)}
 .gate-err{font-size:.8rem;color:#f09090;margin-top:.6rem;min-height:1.1rem}
-.gate-hint{font-size:.75rem;color:var(--text2);margin-top:1rem}
-.gate-hint span{color:var(--gold);font-weight:600}
+.gate-back{display:block;margin-top:1.1rem;font-size:.78rem;color:var(--text2)}
+.gate-back a{color:var(--gold);text-decoration:none;cursor:pointer}
+.gate-back a:hover{text-decoration:underline}
+.gate-hint{font-size:.74rem;color:rgba(255,255,255,.2);margin-top:.8rem}
+.gate-hint span{color:rgba(201,168,76,.5)}
+
+/* ── LAYOUT ── */
 .layout{display:flex;min-height:100vh}
 .sidebar{width:220px;flex-shrink:0;background:#131c2e;border-right:1px solid var(--border);display:flex;flex-direction:column;position:sticky;top:0;height:100vh}
 .logo{padding:1.4rem 1.5rem;border-bottom:1px solid var(--border)}
@@ -101,16 +108,17 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);m
 </head>
 <body>
 
-<!-- ADMIN GATE -->
+<!-- GATE (shown only if someone opens admin.html directly without going through login) -->
 <div id="gate">
   <div class="gate-card">
     <div class="gate-icon">🔐</div>
     <h2>Admin Access</h2>
-    <p>This area is restricted. Enter your admin password to continue.</p>
+    <p>Enter your admin password to access the dashboard.</p>
     <input id="gate-input" type="password" placeholder="Enter admin password" onkeydown="if(event.key==='Enter') checkGate()"/>
     <button class="gate-btn" onclick="checkGate()">Unlock Admin</button>
     <div class="gate-err" id="gate-err"></div>
-    <p class="gate-hint">Default password: <span>admin1234</span><br>Change it inside Settings after login.</p>
+    <p class="gate-back">Not an admin? <a href="login.html">← Go back to login</a></p>
+    <p class="gate-hint">Default: <span>admin1234</span> · Change in Settings</p>
   </div>
 </div>
 
@@ -198,7 +206,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);m
   </main>
 </div>
 
-<!-- MODAL -->
+<!-- CONTENT MODAL -->
 <div class="overlay" id="overlay">
   <div class="modal">
     <div class="mhead"><h3 id="m-title">Add</h3><button class="mclose" onclick="closeForm()">✕</button></div>
@@ -219,9 +227,19 @@ const SUPABASE_URL = 'https://kgqlcjdjdhssactfezwi.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtncWxjamRqZGhzc2FjdGZlendpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk0NTE2MzQsImV4cCI6MjA5NTAyNzYzNH0.6hJpg9Zput8wnuDfq7wzb5dRC2KkuRmkmaz870U0Lto';
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
-// ── ADMIN GATE ──
+// ── GATE ──
 const DEFAULT_PASS = 'admin1234';
-function getAdminPass(){ return localStorage.getItem('edu_adminpass')||DEFAULT_PASS; }
+function getAdminPass(){ return localStorage.getItem('edu_adminpass') || DEFAULT_PASS; }
+
+// Check auth on load
+if(sessionStorage.getItem('edu_admin_auth') === '1'){
+  document.getElementById('gate').classList.add('hide');
+  renderAll();
+  loadSettings();
+} else {
+  // Not authenticated — show gate
+  document.getElementById('gate').classList.remove('hide');
+}
 
 window.checkGate = function(){
   const v = document.getElementById('gate-input').value;
@@ -233,19 +251,14 @@ window.checkGate = function(){
   } else {
     document.getElementById('gate-err').textContent = 'Incorrect password. Try again.';
     document.getElementById('gate-input').value = '';
-    setTimeout(()=>document.getElementById('gate-err').textContent='', 2500);
+    setTimeout(() => document.getElementById('gate-err').textContent = '', 2500);
   }
 };
-document.getElementById('gate-input').addEventListener('keydown', e=>{ if(e.key==='Enter') checkGate(); });
 
 window.lockAdmin = function(){
   sessionStorage.removeItem('edu_admin_auth');
-  location.reload();
+  window.location.href = 'login.html';
 };
-
-if(sessionStorage.getItem('edu_admin_auth')==='1'){
-  document.getElementById('gate').classList.add('hide');
-}
 
 function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;') }
 
@@ -254,9 +267,9 @@ window.go = function(p){
   document.querySelectorAll('.page').forEach(e=>e.classList.remove('on'));
   document.querySelectorAll('.sitem').forEach(e=>e.classList.remove('on'));
   document.getElementById('p-'+p).classList.add('on');
-  const map={dash:'dashboard',lessons:'lessons',resources:'resources',videos:'videos',articles:'articles',users:'users',settings:'settings'};
-  document.querySelectorAll('.sitem').forEach(e=>{ if(e.textContent.trim().toLowerCase().includes(map[p]||p)) e.classList.add('on'); });
-  renderAll();
+  const labels={dash:'dashboard',lessons:'lessons',resources:'resources',videos:'videos',articles:'articles',announce:'announcements',users:'users',settings:'settings'};
+  document.querySelectorAll('.sitem').forEach(e=>{ if(e.textContent.trim().toLowerCase().includes(labels[p]||p)) e.classList.add('on'); });
+  if(p==='dash') renderAll();
 };
 
 // ── RENDER ALL ──
@@ -334,10 +347,11 @@ window.openForm = async function(type, id=null){
   _type=type; _id=id;
   let item = {};
   if(id){
-    const { data } = await supabase.from(type+'s').select('*').eq('id',id).single();
+    const tbl = type==='announce' ? 'announcements' : type+'s';
+    const { data } = await supabase.from(tbl).select('*').eq('id',id).single();
     item = data || {};
   }
-  document.getElementById('m-title').textContent = (id?'Edit ':'Add ')+{lesson:'Lesson',resource:'Resource',video:'Video',article:'Article'}[type];
+  document.getElementById('m-title').textContent = (id?'Edit ':'Add ')+{lesson:'Lesson',resource:'Resource',video:'Video',article:'Article',announce:'Announcement'}[type];
   document.getElementById('m-body').innerHTML = buildForm(type,item);
   document.getElementById('overlay').classList.add('open');
 };
@@ -386,15 +400,14 @@ function buildForm(type,d={}){
 }
 
 window.saveItem = async function(){
-  const title = fv('f-title');
-  if(!title){ toast('Please enter a title.', true); return; }
+  const isAnnounce = _type === 'announce';
+  const title = isAnnounce ? fv('f-message') : fv('f-title');
+  if(!title){ toast('Please fill in the required field.', true); return; }
 
   const saveBtn = document.getElementById('save-btn');
   saveBtn.disabled = true; saveBtn.textContent = 'Saving…';
 
-  const table = _type === 'announce' ? 'announcements' : _type + 's';
-  // Announcements use 'message' not 'title'
-  const isAnnounce = _type === 'announce';
+  const table = isAnnounce ? 'announcements' : _type + 's';
   const base = isAnnounce
     ? { message: fv('f-message') }
     : { title, dz: fv('f-dz'), description: fv('f-description'), url: fv('f-url') };
@@ -407,7 +420,6 @@ window.saveItem = async function(){
   }[_type] || {};
 
   const newItem = { ...base, ...extra };
-
   let error;
   if(_id){
     ({ error } = await supabase.from(table).update(newItem).eq('id', _id));
@@ -417,10 +429,8 @@ window.saveItem = async function(){
     ({ error } = await supabase.from(table).insert(newItem));
     if(!error) toast('Added! ✓');
   }
-
   if(error){ toast('Error: ' + error.message, true); }
   else { closeForm(); renderAll(); }
-
   saveBtn.disabled = false; saveBtn.textContent = 'Save';
 };
 
@@ -475,12 +485,6 @@ window.changePassword = function(){
   document.getElementById('pwd-confirm').value='';
   setTimeout(()=>msg.textContent='', 3000);
 };
-
-// ── INIT ──
-if(sessionStorage.getItem('edu_admin_auth')==='1'){
-  renderAll();
-  loadSettings();
-}
 </script>
 </body>
 </html>
